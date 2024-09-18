@@ -17,6 +17,8 @@ import {
   Avatar,
 } from '@nextui-org/react'
 import { HomeModernIcon } from '@heroicons/react/24/solid'
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+
 
 interface NavBarProps {
   children: React.ReactNode
@@ -25,10 +27,39 @@ interface NavBarProps {
 export default function NavBar({ children }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const menuItems = ['Profile', 'Dashboard', 'Log Out']
+  const { isAuthenticated } = useKindeBrowserClient();
+
+
+  const menuItems = isAuthenticated ? [
+    {
+      textValue: 'Profile',
+      href: '/profile'
+    },
+    {
+      textValue: 'Dashboard',
+      href: '/dashboard'
+    },
+    {
+      textValue: 'Log Out',
+      href: '/api/auth/logout'
+    }
+  ] : [
+    {
+      textValue: 'Log In',
+      href: '/api/auth/login'
+    },
+    {
+      textValue: 'Sign Up',
+      href: '/api/auth/signup'
+    }
+  ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar
+      isBordered
+      className='shadow'
+      onMenuOpenChange={setIsMenuOpen}
+    >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -62,9 +93,9 @@ export default function NavBar({ children }: NavBarProps) {
       </NavbarContent>
 
 
-      <NavbarMenu>
+      <NavbarMenu >
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+          <NavbarMenuItem key={`${item.textValue}-${index}`}>
             <Link
               color={
                 index === 2
@@ -74,10 +105,10 @@ export default function NavBar({ children }: NavBarProps) {
                     : 'foreground'
               }
               className="w-full"
-              href={`/${item.toLowerCase()}`}
+              href={item.href}
               size="lg"
             >
-              {item}
+              {item.textValue}
             </Link>
           </NavbarMenuItem>
         ))}

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import prisma from "@/libs/prisma";
-import { cookies } from "next/headers";
 
 //  after login, the redirect action will call the api/auth/success route by GET request instead of POST request
 export async function GET(request: NextRequest) {
   const { getUser } = await getKindeServerSession()
   const kindeUser = await getUser()
+
 
   if (!kindeUser || !kindeUser.id) {
     throw new Error(`Something went wrong with authentication ${kindeUser}`)
@@ -18,8 +18,8 @@ export async function GET(request: NextRequest) {
         id: kindeUser.id
       }
     })
-  
-    if(!dbUser) {
+
+    if (!dbUser) {
       await prisma.user.create({
         data: {
           id: kindeUser.id,
@@ -30,12 +30,11 @@ export async function GET(request: NextRequest) {
         }
       })
     }
-  
+
+    return NextResponse.redirect('http://localhost:3000/')
   } catch (error) {
     console.error('error', error)
     // logout from kinde provider if db user creation fails
-    NextResponse.redirect('http://localhost:3000/api/auth/logout')
+    return NextResponse.redirect('http://localhost:3000/api/auth/logout')
   }
-
-  return NextResponse.redirect('http://localhost:3000/')
 }
