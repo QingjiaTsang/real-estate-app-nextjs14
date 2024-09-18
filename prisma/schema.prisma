@@ -14,7 +14,8 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  // id would be the user's id from the auth provider, so no need for @default(cuid())
+  id        String   @id
   email     String   @unique
   firstName String
   lastName  String

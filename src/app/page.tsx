@@ -1,11 +1,12 @@
-import Image from 'next/image';
-import { RegisterLink, LoginLink } from '@kinde-oss/kinde-auth-nextjs/components';
+import NavBar from '@/app/components/NavBar'
+import UserAuthPanel from '@/app/components/UserAuthPanel'
 
 export default function Home() {
   return (
     <div>
-      <LoginLink>Sign in</LoginLink>
-      <RegisterLink>Sign up</RegisterLink>
+      <NavBar>
+        <UserAuthPanel />
+      </NavBar>
     </div>
-  );
+  )
 }
