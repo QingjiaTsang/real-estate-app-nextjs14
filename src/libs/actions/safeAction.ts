@@ -1,6 +1,7 @@
 import prisma from "@/libs/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { createSafeActionClient, DEFAULT_SERVER_ERROR_MESSAGE } from "next-safe-action";
+import { redirect } from "next/navigation";
 
 export class ActionError extends Error { }
 
@@ -19,6 +20,7 @@ export const authAction = action.use(async ({ ctx, next }) => {
 
   const isLoggedIn = await isAuthenticated()
   if (!isLoggedIn) {
+    // redirect('/api/auth/login')
     throw new ActionError('Unauthorized')
   }
 
