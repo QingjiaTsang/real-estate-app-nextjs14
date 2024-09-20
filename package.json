@@ -11,14 +11,21 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@kinde-oss/kinde-auth-nextjs": "^2.3.8",
+    "@nextui-org/card": "^2.0.34",
+    "@nextui-org/divider": "^2.0.32",
+    "@nextui-org/modal": "^2.0.41",
     "@nextui-org/navbar": "^2.0.37",
     "@nextui-org/react": "^2.4.8",
     "@prisma/client": "5.19.1",
+    "@supabase/supabase-js": "^2.45.4",
     "framer-motion": "^11.5.4",
     "next": "14.2.11",
     "next-safe-action": "^7.9.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-toastify": "^10.0.5",
+    "zod": "^3.23.8",
+    "zod-form-data": "^2.0.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.6.0",
@@ -28,6 +35,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.11",
     "postcss": "^8",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6",
     "prisma": "^5.19.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.1.3"

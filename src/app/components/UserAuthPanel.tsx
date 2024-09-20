@@ -8,8 +8,6 @@ const UserAuthPanel = async () => {
   const dbUserResult = await getDbUser()
   const user = dbUserResult?.data
 
-  console.log('user 678', user)
-
   if (!user) {
     return (
       <div className="flex items-center gap-2">
@@ -23,7 +21,7 @@ const UserAuthPanel = async () => {
     )
   }
 
-  // do not render with kinde user info, instead use db user info
+  // Note: do not render with kinde user info, instead use db user info
   // because kinde will merge the user info when user with the same email logging in by email+code and google oAuth2
   // which may cause the user info stored in kinde not completely the same as db user info
   return (
@@ -34,7 +32,7 @@ const UserAuthPanel = async () => {
         name={user!.firstName}
         avatarProps={{
           isBordered: true,
-          src: user!.avatarUrl! ?? '/images/defaultUserAvatar.png',
+          src: user!.avatarUrl! ?? '/images/default-user-avatar.png',
         }}
       />
     </div>

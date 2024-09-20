@@ -7,6 +7,8 @@ import { NextUIProvider } from '@nextui-org/react';
 import NavBar from '@/app/components/NavBar'
 import UserAuthPanel from '@/app/components/UserAuthPanel'
 
+import ToastProvider from '@/app/components/ToastProvider'
+
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
   variable: '--font-geist-sans',
@@ -33,6 +35,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextUIProvider>
+          <ToastProvider />
           <NavBar>
             <UserAuthPanel />
           </NavBar>

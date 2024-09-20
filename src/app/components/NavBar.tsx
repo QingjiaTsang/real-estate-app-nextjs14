@@ -33,11 +33,7 @@ export default function NavBar({ children }: NavBarProps) {
   const menuItems = isAuthenticated ? [
     {
       textValue: 'Profile',
-      href: '/profile'
-    },
-    {
-      textValue: 'Dashboard',
-      href: '/dashboard'
+      href: '/user/profile'
     },
     {
       textValue: 'Log Out',
@@ -76,6 +72,7 @@ export default function NavBar({ children }: NavBarProps) {
         </NavbarBrand>
       </NavbarContent>
 
+      {/* desktop menu */}
       <NavbarContent justify="end">
         <NavbarItem className="hidden sm:flex">
           <Dropdown placement="bottom-end">
@@ -83,16 +80,17 @@ export default function NavBar({ children }: NavBarProps) {
               <div>{children}</div>
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions">
-              <DropdownItem key="dashboard" textValue="Dashboard" href="/dashboard">Dashboard</DropdownItem>
-              <DropdownItem key="profile" textValue="Profile" href="/profile">Profile</DropdownItem>
-              {/* api/auth/logout route from kinde provider */}
-              <DropdownItem key="logout" textValue="Log Out" href="api/auth/logout">Log Out</DropdownItem>
+              {menuItems.map((item) => (
+                <DropdownItem key={item.textValue} textValue={item.textValue} href={item.href}>
+                  {item.textValue}
+                </DropdownItem>
+              ))}
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>
       </NavbarContent>
 
-
+      {/* mobile menu */}
       <NavbarMenu >
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.textValue}-${index}`}>
