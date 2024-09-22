@@ -36,9 +36,14 @@ export default function NavBar({ children }: NavBarProps) {
       href: '/user/profile'
     },
     {
+      textValue: 'Properties',
+      href: '/user/properties'
+    },
+    {
       textValue: 'Log Out',
       href: '/api/auth/logout'
-    }
+    },
+
   ] : [
     {
       textValue: 'Log In',

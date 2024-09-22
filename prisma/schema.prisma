@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  // id would be the user's id from the auth provider, so no need for @default(cuid())
+  // Note: id would be the user's id from the auth provider, so no need for @default(cuid())
   id        String   @id
   email     String   @unique
   firstName String
@@ -22,4 +22,36 @@ model User {
   avatarUrl String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  properties Property[]
+}
+
+model Property {
+  id          String @id @default(cuid())
+  name        String
+  description String
+  price       Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  typeId String
+  type   PropertyType @relation(fields: [typeId], references: [id])
+
+  statusId String?
+  status   PropertyStatus? @relation(fields: [statusId], references: [id])
+}
+
+model PropertyType {
+  id    String @id @default(cuid())
+  value String
+
+  properties Property[]
+}
+
+model PropertyStatus {
+  id    String @id @default(cuid())
+  value String
+
+  properties Property[]
 }

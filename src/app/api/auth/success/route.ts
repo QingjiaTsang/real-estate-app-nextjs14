@@ -35,7 +35,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('error', error)
     // logout from kinde provider if db user creation fails
-    // return NextResponse.redirect('http://localhost:3000/api/auth/logout')
-    return NextResponse.json({ error: 'Something went wrong with authentication' }, { status: 500 })
+    return NextResponse.redirect('http://localhost:3000/api/auth/logout')
   }
 }

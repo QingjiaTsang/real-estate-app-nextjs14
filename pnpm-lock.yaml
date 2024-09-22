@@ -4,6 +4,9 @@ dependencies:
   '@heroicons/react':
     specifier: ^2.1.5
     version: 2.1.5(react@18.0.0)
+  '@hookform/resolvers':
+    specifier: ^3.9.0
+    version: 3.9.0(react-hook-form@7.53.0)
   '@kinde-oss/kinde-auth-nextjs':
     specifier: ^2.3.8
     version: 2.3.8(@babel/core@7.25.2)(next@14.2.11)(react-dom@18.0.0)(react@18.0.0)
@@ -43,6 +46,9 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.0.0(react@18.0.0)
+  react-hook-form:
+    specifier: ^7.53.0
+    version: 7.53.0(react@18.0.0)
   react-toastify:
     specifier: ^10.0.5
     version: 10.0.5(react-dom@18.0.0)(react@18.0.0)
@@ -1556,6 +1562,14 @@ packages:
       react: '>= 16'
     dependencies:
       react: 18.0.0
+    dev: false
+
+  /@hookform/resolvers@3.9.0(react-hook-form@7.53.0):
+    resolution: {integrity: sha512-bU0Gr4EepJ/EQsH/IwEzYLsT/PEj5C0ynLQ4m+GSHS+xKH4TfSelhluTgOaoc4kA5s7eCsQbM4wvZLzELmWzUg==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.53.0(react@18.0.0)
     dev: false
 
   /@humanwhocodes/config-array@0.6.0:
@@ -8313,6 +8327,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.0.0
       scheduler: 0.21.0
+    dev: false
+
+  /react-hook-form@7.53.0(react@18.0.0):
+    resolution: {integrity: sha512-M1n3HhqCww6S2hxLxciEXy2oISPnAzxY7gvwVPrtlczTM/1dDadXgUxDpHMrMTblDOcm/AXtXxHwZ3jpg1mqKQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || ^19
+    dependencies:
+      react: 18.0.0
     dev: false
 
   /react-is@16.13.1:
