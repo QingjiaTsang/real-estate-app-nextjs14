@@ -6,10 +6,14 @@ import { cn } from "@nextui-org/react"
 import Stepper from "@/app/user/properties/add/_components/Stepper"
 import BasicForm, { BasicFormProps } from "@/app/user/properties/add/_components/BasicForm"
 import LocationForm, { LocationFormProps } from "@/app/user/properties/add/_components/LocationForm"
+import FeatureForm, { FeatureFormProps } from "@/app/user/properties/add/_components/FeatureForm"
+import PictureForm, { PictureFormProps } from "@/app/user/properties/add/_components/PictureForm"
 
 type AddPropertyFormProps =
   Omit<BasicFormProps, "onClickNext" | "className"> &
-  Omit<LocationFormProps, "onClickNext" | "onClickPrevious" | "className">
+  Omit<LocationFormProps, "onClickNext" | "onClickPrevious" | "className"> &
+  Omit<FeatureFormProps, "onClickNext" | "onClickPrevious" | "className"> &
+  Omit<PictureFormProps, "onClickNext" | "onClickPrevious" | "className">
 
 const stepItemList = [
   {
@@ -52,6 +56,16 @@ const AddPropertyForm = ({ statusList, typeList }: AddPropertyFormProps) => {
         />
         <LocationForm
           className={cn({ "hidden": currentStep !== 1 })}
+          onClickNext={onClickNext}
+          onClickPrevious={onClickPrevious}
+        />
+        <FeatureForm
+          className={cn({ "hidden": currentStep !== 2 })}
+          onClickNext={onClickNext}
+          onClickPrevious={onClickPrevious}
+        />
+        <PictureForm
+          className={cn({ "hidden": currentStep !== 3 })}
           onClickNext={onClickNext}
           onClickPrevious={onClickPrevious}
         />

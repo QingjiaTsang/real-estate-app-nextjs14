@@ -83,7 +83,7 @@ const LocationForm = ({ onClickNext, onClickPrevious, className }: LocationFormP
           </div>
         </CardBody>
 
-        <CardFooter className="flex justify-center w-full gap-3">
+        <CardFooter className="flex justify-center gap-3">
           <Button
             color="primary"
             startContent={<ChevronLeftIcon className="w-4 h-4" />}

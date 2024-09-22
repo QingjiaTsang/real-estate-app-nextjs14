@@ -77,7 +77,7 @@ const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormPr
           </div>
         </CardBody>
 
-        <CardFooter className="flex justify-center w-full gap-3">
+        <CardFooter className="flex justify-center gap-3">
           <Button
             isDisabled
             color="primary"

@@ -5,6 +5,8 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   lablText?: string;
   onSelect?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+
+  image: File | undefined;
 }
 
 const FileInput = React.forwardRef<HTMLInputElement, IProps>(
@@ -16,18 +18,20 @@ const FileInput = React.forwardRef<HTMLInputElement, IProps>(
       onChange,
       onSelect,
       error,
+      image,
 
       ...props
     },
     ref
   ) => {
-    const [fileName, setFileName] = useState("");
     function fileChangedHandler(e: any) {
       const file = e.target.files[0];
-      setFileName(file.name);
-      onChange && onChange(e);
-      onSelect && onSelect(e);
+      if (file) {
+        onChange && onChange(e);
+        onSelect && onSelect(e);
+      }
     }
+
 
     return (
       <div className={className}>
@@ -42,13 +46,13 @@ const FileInput = React.forwardRef<HTMLInputElement, IProps>(
             <input
               className="hidden"
               ref={ref}
-              onChange={(e) => fileChangedHandler(e)}
+              onChange={fileChangedHandler}
               {...props}
               type="file"
             />
             Upload File
           </div>
-          <div className="mx-2 break-all flex items-center justify-center">{fileName}</div>
+          <div className="mx-2 break-all flex items-center justify-center">{image?.name}</div>
         </label>
         {error && <p className="text-red-600 text-right animate-shake">{error}</p>}
       </div>

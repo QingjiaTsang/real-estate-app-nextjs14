@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 
 const UploadAvatarButton = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatar, setAvatar] = useState<File | undefined>();
 
   const router = useRouter()
 
@@ -60,9 +60,10 @@ const UploadAvatarButton = () => {
 
               <ModalBody>
                 <FileInput
-                  onChange={(e) => setAvatar(e?.target?.files?.[0] ?? null)}
                   lablText="Select Avatar"
                   accept="image/*"
+                  image={avatar}
+                  onChange={(e) => setAvatar(e?.target?.files?.[0])}
                 />
                 {
                   avatar && (

@@ -32,17 +32,25 @@ model Property {
   description String
   price       Int
 
+  // one-to-many relationship: one user can have many properties
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
+  // one-to-many relationship: one property type can have many properties
   typeId String
   type   PropertyType @relation(fields: [typeId], references: [id])
 
+  // one-to-many relationship: one property status can have many properties
   statusId String
   status   PropertyStatus @relation(fields: [statusId], references: [id])
 
+  // one-to-one relationship: one property can have one location
   locationId String           @unique
   location   PropertyLocation @relation(fields: [locationId], references: [id])
+
+  // one-to-one relationship: one property can have one feature
+  featureId String          @unique
+  feature   PropertyFeature @relation(fields: [featureId], references: [id])
 }
 
 model PropertyType {
@@ -67,6 +75,19 @@ model PropertyLocation {
   zip       String
   landmarks String
   country   String
+
+  property Property?
+}
+
+model PropertyFeature {
+  id                String  @id @default(cuid())
+  bedrooms          Int
+  bathrooms         Int
+  parkingSpots      Int
+  area              Int
+  hasSwimmingPool   Boolean
+  hasGardenOrYard   Boolean
+  hasBalconyOrPatio Boolean
 
   property Property?
 }
