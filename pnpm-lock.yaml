@@ -31,6 +31,9 @@ dependencies:
   '@supabase/supabase-js':
     specifier: ^2.45.4
     version: 2.45.4
+  country-list-with-dial-code-and-flag:
+    specifier: ^5.0.5
+    version: 5.0.5
   framer-motion:
     specifier: ^11.5.4
     version: 11.5.4(react-dom@18.0.0)(react@18.0.0)
@@ -5568,6 +5571,10 @@ packages:
     resolution: {integrity: sha512-JRH6gfXxGmrzF3tZ57lFx97YARxCXPaMzPo6jELZhv88pBH5VXpQ+y0znKGlFnzuaihqhLbefxSJxWJMPtfDzw==}
     dependencies:
       browserslist: 4.23.3
+
+  /country-list-with-dial-code-and-flag@5.0.5:
+    resolution: {integrity: sha512-y9Rng5zNHxT7W7dDBn2xbt7p+8DFlt8FZUT4b2aEpTfJ073n+uOMg7zxsoMT7X0wuCO7l1lAwj/VaYvIMumnQA==}
+    dev: false
 
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}

@@ -38,8 +38,11 @@ model Property {
   typeId String
   type   PropertyType @relation(fields: [typeId], references: [id])
 
-  statusId String?
-  status   PropertyStatus? @relation(fields: [statusId], references: [id])
+  statusId String
+  status   PropertyStatus @relation(fields: [statusId], references: [id])
+
+  locationId String           @unique
+  location   PropertyLocation @relation(fields: [locationId], references: [id])
 }
 
 model PropertyType {
@@ -54,4 +57,16 @@ model PropertyStatus {
   value String
 
   properties Property[]
+}
+
+model PropertyLocation {
+  id        String @id @default(cuid())
+  address   String
+  city      String
+  state     String
+  zip       String
+  landmarks String
+  country   String
+
+  property Property?
 }

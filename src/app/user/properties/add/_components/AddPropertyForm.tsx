@@ -1,11 +1,15 @@
 'use client'
 import { useState } from "react"
 
-import Stepper from "@/app/user/properties/add/_components/Stepper"
-import BasicForm, { BasicFormProps } from "@/app/user/properties/add/_components/BasicForm"
 import { cn } from "@nextui-org/react"
 
-type AddPropertyFormProps = Omit<BasicFormProps, "onClickNext" | "className">
+import Stepper from "@/app/user/properties/add/_components/Stepper"
+import BasicForm, { BasicFormProps } from "@/app/user/properties/add/_components/BasicForm"
+import LocationForm, { LocationFormProps } from "@/app/user/properties/add/_components/LocationForm"
+
+type AddPropertyFormProps =
+  Omit<BasicFormProps, "onClickNext" | "className"> &
+  Omit<LocationFormProps, "onClickNext" | "onClickPrevious" | "className">
 
 const stepItemList = [
   {
@@ -45,6 +49,11 @@ const AddPropertyForm = ({ statusList, typeList }: AddPropertyFormProps) => {
           statusList={statusList}
           typeList={typeList}
           onClickNext={onClickNext}
+        />
+        <LocationForm
+          className={cn({ "hidden": currentStep !== 1 })}
+          onClickNext={onClickNext}
+          onClickPrevious={onClickPrevious}
         />
       </form>
     </div>

@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardFooter, cn, Input, Select, SelectItem, Text
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 
 const basicFormSchema = z.object({
@@ -76,11 +76,13 @@ const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormPr
             {errors.price && <p className="text-danger">{errors.price.message}</p>}
           </div>
         </CardBody>
-        <CardFooter className="flex justify-end gap-2">
+
+        <CardFooter className="flex justify-center w-full gap-3">
           <Button
             isDisabled
             color="primary"
             startContent={<ChevronLeftIcon className="w-4 h-4" />}
+            className="w-36"
           >
             Previous
           </Button>
@@ -91,6 +93,7 @@ const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormPr
               const isValid = await trigger()
               isValid && onClickNext()
             }}
+            className="w-36"
           >
             Next
           </Button>
