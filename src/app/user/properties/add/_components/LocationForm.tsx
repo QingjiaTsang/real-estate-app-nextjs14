@@ -33,7 +33,11 @@ const LocationForm = ({ onClickNext, onClickPrevious, className }: LocationFormP
                 errorMessage={errors.location?.country?.message}
               >
                 {COUNTRY_LIST.map((country) => (
-                  <SelectItem key={country.name + country.dialCode} value={country.name}>
+                  <SelectItem
+                    key={country.name + country.dialCode}
+                    value={country.name}
+                    className="min-w-40"
+                  >
                     {`${country.flag} ${country.name}`}
                   </SelectItem>
                 ))}

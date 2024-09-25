@@ -7,7 +7,7 @@ const PropertiesPage = ({
 }>) => {
   return (
     <div>
-      {children}
+      PropertiesPage
     </div>
   )
 }

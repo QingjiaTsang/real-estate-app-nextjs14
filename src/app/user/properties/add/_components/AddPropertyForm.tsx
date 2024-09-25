@@ -22,7 +22,7 @@ import { uploadPropertyPictures } from "@/libs/upload"
 type AddPropertyFormProps =
   Omit<BasicFormProps, "onClickNext" | "className">
 
-const stepItemList = [
+const STEP_ITEM_LIST = [
   {
     label: "Basic",
   },
@@ -117,7 +117,7 @@ const AddPropertyForm = ({ statusList, typeList }: AddPropertyFormProps) => {
 
   return (
     <div>
-      <Stepper stepItemList={stepItemList} currentStep={currentStep} setCurrentStep={setCurrentStep} />
+      <Stepper stepItemList={STEP_ITEM_LIST} currentStep={currentStep} setCurrentStep={setCurrentStep} />
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit, (errors) => {
           console.error("errors", errors)
