@@ -29,7 +29,7 @@ const UploadAvatarButton = () => {
     }
   })
 
-  const handleSubmit = async () => {
+  const onSubmit = async () => {
     if (!avatar) {
       onClose()
       return;
@@ -55,7 +55,7 @@ const UploadAvatarButton = () => {
       >
         <ModalContent>
           {(onClose) => (
-            <form action={handleSubmit}>
+            <form action={onSubmit}>
               <ModalHeader className="flex flex-col gap-1">Upload Avatar</ModalHeader>
 
               <ModalBody>

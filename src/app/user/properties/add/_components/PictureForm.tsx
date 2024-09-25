@@ -1,24 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-import { Button, Card, CardBody, CardFooter, cn } from "@nextui-org/react"
-import { ChevronLeftIcon, ChevronRightIcon, XCircleIcon } from "@heroicons/react/24/outline"
+import { Button, Card, CardBody, CardFooter, cn, Image } from "@nextui-org/react"
+import { ChevronLeftIcon, ChevronRightIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/outline"
 import FileInput from "@/app/components/FileInput"
-import Image from 'next/image'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+import { useFormContext } from "react-hook-form"
+import { AddPropertyFormSchema } from "@/zodSchema/property.zod"
 
-export type PictureFormProps = {
+
+type PictureFormProps = {
   onClickNext: () => void
   onClickPrevious: () => void
   className?: string
 }
 
 const PictureForm = ({ onClickNext, onClickPrevious, className }: PictureFormProps) => {
-  const [images, setImages] = useState<(File | undefined)[]>([])
-
+  const { formState: { errors }, setValue, trigger } = useFormContext<AddPropertyFormSchema>()
+  const [images, setImages] = useState<File[]>([])
 
   const handleDeleteImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index))
+    setImages(prev => {
+      const newImages = prev.filter((_, i) => i !== index)
+      setValue("pictures", newImages)
+      return newImages
+    })
   }
 
+  const handleAddImage = (file: File) => {
+    setImages(prev => {
+      const newImages = [...prev, file]
+      setValue("pictures", newImages)
+      return newImages
+    })
+  }
 
   return (
     <div className={cn("container mx-auto p-4", className)}>
@@ -28,29 +43,33 @@ const PictureForm = ({ onClickNext, onClickPrevious, className }: PictureFormPro
             lablText="Upload Property Images"
             accept="image/*"
             image={images[images.length - 1]}
-            onChange={(e) => setImages(prev => [...prev, e?.target?.files?.[0]])}
+            onChange={(e) => handleAddImage(e?.target?.files?.[0]!)}
           />
           <div className="flex my-2 gap-2 flex-wrap">
             {images.map((image, index) => (
               <div key={index} className="relative group">
-                <Image
-                  src={URL.createObjectURL(image!)}
-                  alt="Property Image"
-                  width={300}
-                  height={300}
-                  className="object-cover"
-                />
+                <Zoom>
+                  <Image
+                    src={URL.createObjectURL(image!)}
+                    alt="Property Image"
+                    width={300}
+                    height={300}
+                    className="object-cover"
+                  />
+                </Zoom>
                 <button
                   type="button"
-                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white rounded-full p-1"
+                  className="z-10 absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-danger rounded-full p-1"
                   onClick={() => handleDeleteImage(index)}
                 >
-                  <XCircleIcon className="h-5 w-5" />
+                  <TrashIcon className="h-5 w-5" />
                 </button>
               </div>
             ))}
           </div>
+          {errors.pictures && <p className="text-danger">{errors.pictures.message}</p>}
         </CardBody>
+
         <CardFooter className="flex justify-center gap-3">
           <Button
             color="primary"
@@ -62,10 +81,12 @@ const PictureForm = ({ onClickNext, onClickPrevious, className }: PictureFormPro
           </Button>
           <Button
             color="primary"
-            onClick={onClickNext}
+            onClick={async () => {
+              const isValid = await trigger(["pictures"])
+              isValid && onClickNext()
+            }}
             endContent={<ChevronRightIcon className="h-4 w-4" />}
             className="w-36"
-            isDisabled={images.length === 0}
           >
             Next
           </Button>

@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { randomUUID } from "crypto";
+import { v4 as uuidv4 } from "uuid";
 
 export async function uploadAvatar(image: File): Promise<string | null> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -18,7 +18,7 @@ export async function uploadAvatar(image: File): Promise<string | null> {
     //   .upload(`${image.name}_${Date.now()}`, image);
     const { data, error } = await supabase.storage
       .from("avatars")
-      .upload(`${randomUUID()}_${Date.now()}`, image);
+      .upload(`${uuidv4()}_${Date.now()}`, image);
 
     if (error) {
       /*
@@ -43,7 +43,7 @@ export async function uploadAvatar(image: File): Promise<string | null> {
 
     console.log("Upload successful:", data);
 
-    const { data: urlData } = await supabase.storage
+    const { data: urlData } = supabase.storage
       .from("avatars")
       .getPublicUrl(data.path);
 
@@ -54,3 +54,29 @@ export async function uploadAvatar(image: File): Promise<string | null> {
   }
 }
 
+export async function uploadPropertyPictures(images: File[]): Promise<string[] | null> {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+
+  if (!supabaseUrl || !supabaseKey) {
+    console.error("Supabase URL or key is missing");
+    return null;
+  }
+
+  try {
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    const uploadPromises = images.map(image => supabase.storage
+      .from("property_pictures")
+      .upload(`${uuidv4()}_${Date.now()}`, image));
+
+    const uploadResults = await Promise.all(uploadPromises);
+
+    const urls = uploadResults.map(item => supabase.storage.from("property_pictures").getPublicUrl(item?.data?.path ?? "").data.publicUrl)
+
+    return urls;
+  } catch (error) {
+    console.error("Unexpected error during property picture upload:", error);
+    return null;
+  }
+}

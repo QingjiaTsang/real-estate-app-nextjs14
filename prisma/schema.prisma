@@ -27,10 +27,10 @@ model User {
 }
 
 model Property {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   description String
-  price       Int
+  price       Decimal @db.Decimal(10, 2)
 
   // one-to-many relationship: one user can have many properties
   userId String
@@ -51,6 +51,13 @@ model Property {
   // one-to-one relationship: one property can have one feature
   featureId String          @unique
   feature   PropertyFeature @relation(fields: [featureId], references: [id])
+
+  // one-to-many relationship: one property can have many pictures
+  pictures PropertyPicture[]
+
+  // one-to-one relationship: one property can have one contact
+  contactId String          @unique
+  contact   PropertyContact @relation(fields: [contactId], references: [id])
 }
 
 model PropertyType {
@@ -88,6 +95,23 @@ model PropertyFeature {
   hasSwimmingPool   Boolean
   hasGardenOrYard   Boolean
   hasBalconyOrPatio Boolean
+
+  property Property?
+}
+
+model PropertyPicture {
+  id  String @id @default(cuid())
+  url String
+
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+}
+
+model PropertyContact {
+  id    String @id @default(cuid())
+  name  String
+  phone String
+  email String
 
   property Property?
 }

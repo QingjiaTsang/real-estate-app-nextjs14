@@ -7,6 +7,7 @@ export class ActionError extends Error { }
 
 export const action = createSafeActionClient({
   handleServerError: (error) => {
+    console.log("error from safeAction", error)
     if (error instanceof ActionError) {
       return error.message
     }
