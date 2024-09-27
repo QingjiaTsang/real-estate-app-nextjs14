@@ -70,13 +70,13 @@ const PropertyTable = ({ properties, totalPage, page }: PropertyTableProps) => {
                   </Tooltip>
 
                   <Tooltip content="Edit Property" >
-                    <Link href={`/user/property/${property.id}/edit`}>
+                    <Link href={`/user/properties/${property.id}/edit`}>
                       <PencilIcon className="w-4 h-4 cursor-pointer mr-2 hover:text-success transition-colors duration-200" />
                     </Link>
                   </Tooltip>
 
                   <Tooltip content="Delete Property" >
-                    <Link href={`/user/property/${property.id}/delete`}>
+                    <Link href={`/user/properties/${property.id}/delete`}>
                       <TrashIcon className="w-4 h-4 cursor-pointer hover:text-danger transition-colors duration-200" />
                     </Link>
                   </Tooltip>
@@ -111,13 +111,13 @@ const MobilePropertyCard = (property: PropertyTableProps['properties'][0]) => (
     <p>Type: {property.type.value}</p>
     <p>Status: {property.status.value}</p>
     <div className="flex items-center gap-2 mt-2">
-      <Link href={`/user/property/${property.id}`}>
+      <Link href={`/property/${property.id}`}>
         <EyeIcon className="w-5 h-5 cursor-pointer mr-2" />
       </Link>
-      <Link href={`/user/property/${property.id}/edit`}>
+      <Link href={`/user/properties/${property.id}/edit`}>
         <PencilIcon className="w-5 h-5 cursor-pointer mr-2" />
       </Link>
-      <Link href={`/user/property/${property.id}/delete`}>
+      <Link href={`/user/properties/${property.id}/delete`}>
         <TrashIcon className="w-5 h-5 cursor-pointer hover:text-danger transition-colors duration-200" />
       </Link>
     </div>

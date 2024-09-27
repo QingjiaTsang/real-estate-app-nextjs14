@@ -5,7 +5,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 
 import CountryList from 'country-list-with-dial-code-and-flag'
 
-import { AddPropertyFormSchema } from "@/zodSchema/property.zod"
+import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
 
 type LocationFormProps = {
   onClickNext: () => void
@@ -16,7 +16,7 @@ type LocationFormProps = {
 const COUNTRY_LIST = CountryList.getAll().map((country) => ({ flag: country.flag, name: country.name, dialCode: country.dialCode }))
 
 const LocationForm = ({ onClickNext, onClickPrevious, className }: LocationFormProps) => {
-  const { control, formState: { errors }, trigger } = useFormContext<AddPropertyFormSchema>()
+  const { control, formState: { errors }, trigger, getValues } = useFormContext<UpsertPropertyFormSchemaType>()
 
   return (
     <div className={cn("container mx-auto p-4", className)}>
@@ -29,6 +29,8 @@ const LocationForm = ({ onClickNext, onClickPrevious, className }: LocationFormP
               <Select
                 {...field}
                 label="Country"
+                placeholder="Select Country"
+                defaultSelectedKeys={[getValues('location.country')]}
                 isInvalid={!!errors.location?.country}
                 errorMessage={errors.location?.country?.message}
               >

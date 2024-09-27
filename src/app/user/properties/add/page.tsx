@@ -1,6 +1,9 @@
 import prisma from "@/libs/prisma"
 
-import AddPropertyForm from "@/app/user/properties/add/_components/AddPropertyForm"
+import UpsertPropertyForm from "@/app/user/properties/add/_components/UpsertPropertyForm"
+import PageTitle from "@/app/components/PageTitle"
+import { Button } from "@nextui-org/react"
+import Link from "next/link"
 
 const AddPropertyPage = async () => {
   const [propertyStatusList, propertyTypeList] = await Promise.all([
@@ -10,7 +13,11 @@ const AddPropertyPage = async () => {
 
   return (
     <div>
-      <AddPropertyForm statusList={propertyStatusList} typeList={propertyTypeList} />
+      <PageTitle
+        title="Properties"
+        rightContent={<Button color='secondary' href='/user/properties/add' as={Link}>Add Property</Button>}
+      />
+      <UpsertPropertyForm statusList={propertyStatusList} typeList={propertyTypeList} />
     </div>
   )
 }

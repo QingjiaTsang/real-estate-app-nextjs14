@@ -1,19 +1,60 @@
 'use server'
 import { Prisma, Property } from "@prisma/client"
-import { addPropertyActionSchema } from "@/zodSchema/property.zod"
+import { upsertPropertyActionSchema } from "@/zodSchema/property.zod"
 
 import prisma from "@/libs/prisma"
 import { flattenValidationErrors } from "next-safe-action"
 import { authAction } from "@/libs/actions/safeAction"
 
-export const addProperty = authAction
-  .schema(addPropertyActionSchema, {
+export const upsertProperty = authAction
+  .schema(upsertPropertyActionSchema, {
     handleValidationErrorsShape: (errors) => flattenValidationErrors(errors).fieldErrors
   })
-  .action(async ({ ctx, parsedInput: { basic, location, features, contact, pictures } }) => {
+  .action(async ({ ctx, parsedInput: { basic, location, features, contact, pictures, id, pictureIdsToDelete } }) => {
     try {
-      const newProperty = await prisma.property.create({
-        data: {
+      const newProperty = await prisma.property.upsert({
+        where: {
+          id: id
+        },
+        update: {
+          name: basic.name,
+          description: basic.description,
+          price: parseFloat(basic.price),
+          type: {
+            connect: {
+              id: basic.typeId
+            }
+          },
+          status: {
+            connect: {
+              id: basic.statusId
+            }
+          },
+          location: {
+            update: location
+          },
+          feature: {
+            update: {
+              ...features,
+              bedrooms: parseInt(features.bedrooms),
+              bathrooms: parseInt(features.bathrooms),
+              parkingSpots: parseInt(features.parkingSpots),
+              area: parseInt(features.area),
+            },
+          },
+          contact: {
+            update: contact
+          },
+          pictures: {
+            deleteMany: {
+              id: {
+                in: pictureIdsToDelete
+              }
+            },
+            create: pictures.map(url => ({ url })),
+          },
+        },
+        create: {
           name: basic.name,
           description: basic.description,
           price: parseFloat(basic.price),

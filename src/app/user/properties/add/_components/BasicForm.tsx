@@ -1,3 +1,5 @@
+import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
+
 import { PropertyStatus, PropertyType } from "@prisma/client"
 
 import { Button, Card, CardBody, CardFooter, cn, Input, Select, SelectItem, Textarea } from "@nextui-org/react"
@@ -5,17 +7,17 @@ import { Button, Card, CardBody, CardFooter, cn, Input, Select, SelectItem, Text
 import { Controller, useFormContext } from "react-hook-form"
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline"
-import { AddPropertyFormSchema } from "@/zodSchema/property.zod"
 
-export type BasicFormProps = {
+type BasicFormProps = {
   statusList: PropertyStatus[]
   typeList: PropertyType[]
   onClickNext: () => void
   className?: string
 }
 
+
 const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormProps) => {
-  const { control, formState: { errors }, trigger, } = useFormContext<AddPropertyFormSchema>()
+  const { control, formState: { errors }, trigger, getValues } = useFormContext<UpsertPropertyFormSchemaType>()
 
   return (
     <div className={cn("container mx-auto p-4", className)}>
@@ -56,6 +58,8 @@ const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormPr
               <Select
                 {...field}
                 label="Type"
+                defaultSelectedKeys={[getValues('basic.typeId')]}
+                placeholder="Select Type"
                 isInvalid={!!errors.basic?.typeId}
                 errorMessage={errors.basic?.typeId?.message}
                 className="col-span-3 md:col-span-1"
@@ -74,6 +78,8 @@ const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormPr
               <Select
                 {...field}
                 label="Status"
+                defaultSelectedKeys={[getValues('basic.statusId')]}
+                placeholder="Select Status"
                 isInvalid={!!errors.basic?.statusId}
                 errorMessage={errors.basic?.statusId?.message}
                 className="col-span-3 md:col-span-1"

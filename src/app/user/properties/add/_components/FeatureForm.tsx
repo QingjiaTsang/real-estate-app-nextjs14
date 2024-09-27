@@ -3,7 +3,7 @@ import { Button, Card, CardBody, CardFooter, cn, Input, Checkbox } from "@nextui
 import { Controller, useFormContext } from "react-hook-form"
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 
-import { AddPropertyFormSchema } from "@/zodSchema/property.zod"
+import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
 
 
 type FeatureFormProps = {
@@ -13,7 +13,7 @@ type FeatureFormProps = {
 }
 
 const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormProps) => {
-  const { control, formState: { errors }, trigger } = useFormContext<AddPropertyFormSchema>()
+  const { control, formState: { errors }, trigger, getValues } = useFormContext<UpsertPropertyFormSchemaType>()
 
   return (
     <div className={cn("container mx-auto p-4", className)}>
@@ -80,7 +80,11 @@ const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormPro
               control={control}
               name="features.hasSwimmingPool"
               render={({ field }) => (
-                <Checkbox onChange={field.onChange} onBlur={field.onBlur} >
+                <Checkbox
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  defaultSelected={getValues("features.hasSwimmingPool")}
+                >
                   Has Swimming Pool
                 </Checkbox>
               )}
@@ -90,7 +94,11 @@ const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormPro
               control={control}
               name="features.hasGardenOrYard"
               render={({ field }) => (
-                <Checkbox onChange={field.onChange} onBlur={field.onBlur} >
+                <Checkbox
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  defaultSelected={getValues("features.hasGardenOrYard")}
+                >
                   Has Garden/Yard
                 </Checkbox>
               )}
@@ -100,7 +108,11 @@ const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormPro
               control={control}
               name="features.hasBalconyOrPatio"
               render={({ field }) => (
-                <Checkbox onChange={field.onChange} onBlur={field.onBlur} >
+                <Checkbox
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  defaultSelected={getValues("features.hasBalconyOrPatio")}
+                >
                   Has Balcony/Patio
                 </Checkbox>
               )}

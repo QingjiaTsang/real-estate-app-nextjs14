@@ -1,8 +1,11 @@
+import PageTitle from "@/app/components/PageTitle";
 import page from "@/app/page";
 import PropertyTable from "@/app/user/properties/_components/PropertyTable";
 import prisma from "@/libs/prisma";
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { Button } from "@nextui-org/react";
+import Link from "next/link";
 
 import {
   createSearchParamsCache,
@@ -49,11 +52,17 @@ const PropertiesPage = async ({
   const totalPage = Math.ceil(propertyCount / ITEMS_PER_PAGE)
 
   return (
-    <PropertyTable
-      properties={properties}
-      totalPage={totalPage}
-      page={page}
-    />
+    <>
+      <PageTitle
+        title="Properties"
+        rightContent={<Button color='secondary' href='/user/properties/add' as={Link}>Add Property</Button>}
+      />
+      <PropertyTable
+        properties={properties}
+        totalPage={totalPage}
+        page={page}
+      />
+    </>
   )
 }
 

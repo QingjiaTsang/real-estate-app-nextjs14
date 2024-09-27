@@ -60,16 +60,25 @@ const contactSchema = z.object({
   phone: z.string().refine(validator.isMobilePhone, { message: "Invalid phone number" }),
 })
 
-export const addPropertyFormSchema = z.object({
+export const upsertPropertyFormSchema = z.object({
   basic: basicSchema,
   location: locationSchema,
   features: featuresSchema,
-  pictures: z.array(z.instanceof(File)).min(1, { message: "At least one picture is required" }),
   contact: contactSchema,
 })
 
-export const addPropertyActionSchema = addPropertyFormSchema.omit({ pictures: true }).extend({
-  pictures: z.array(z.string()).min(1, { message: "At least one picture is required" }),
+export const upsertPropertyActionSchema = upsertPropertyFormSchema.extend({
+  pictures: z.array(z.string()),
+  pictureIdsToDelete: z.array(z.string()).optional(),
+  id: z.string().optional(),
+}).refine((data) => {
+  if (data.id) {
+    return true
+  }
+  return data.pictures.length > 0
+}, {
+  message: "At least one picture is required for new properties",
+  path: ["pictures"],
 })
 
-export type AddPropertyFormSchema = z.infer<typeof addPropertyFormSchema>
+export type UpsertPropertyFormSchemaType = z.infer<typeof upsertPropertyFormSchema>

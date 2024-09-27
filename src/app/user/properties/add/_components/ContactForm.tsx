@@ -1,9 +1,8 @@
-import React from 'react'
+import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
 
 import { Button, Card, CardBody, CardFooter, cn, Input } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/24/solid'
-import { AddPropertyFormSchema } from "@/zodSchema/property.zod"
 
 type ContactFormProps = {
   isLoading: boolean
@@ -12,7 +11,7 @@ type ContactFormProps = {
 }
 
 const ContactForm = ({ isLoading, onClickPrevious, className }: ContactFormProps) => {
-  const { control, formState: { errors } } = useFormContext<AddPropertyFormSchema>()
+  const { control, formState: { errors } } = useFormContext<UpsertPropertyFormSchemaType>()
 
   return (
     <div className={cn("container mx-auto p-4", className)}>
