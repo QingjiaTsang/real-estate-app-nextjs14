@@ -1,4 +1,6 @@
+import { redirect } from 'next/navigation'
 import prisma from "@/libs/prisma"
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 import PageTitle from "@/app/components/PageTitle"
 import UpsertPropertyForm from "@/app/user/properties/add/_components/UpsertPropertyForm"
@@ -9,6 +11,9 @@ type EditPropertyPageProps = {
 }
 
 const EditPropertyPage = async ({ params }: EditPropertyPageProps) => {
+  const { getUser } = getKindeServerSession()
+  const user = await getUser()
+
   const [propertyStatusList, propertyTypeList, propertyToEdit] = await Promise.all([
     prisma.propertyStatus.findMany(),
     prisma.propertyType.findMany(),
@@ -17,6 +22,7 @@ const EditPropertyPage = async ({ params }: EditPropertyPageProps) => {
         id: params.id,
       },
       include: {
+        user: true,
         location: true,
         feature: true,
         contact: true,
@@ -29,6 +35,11 @@ const EditPropertyPage = async ({ params }: EditPropertyPageProps) => {
 
   if (!propertyToEdit) {
     return notFound()
+  }
+
+  // Note: Don't forget to check if the user is authorized to edit the property
+  if (user && user.id !== propertyToEdit.userId) {
+    redirect('/unauthorized')
   }
 
   return (

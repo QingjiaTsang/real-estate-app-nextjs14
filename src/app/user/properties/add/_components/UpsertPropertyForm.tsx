@@ -27,6 +27,7 @@ type UpsertPropertyFormProps = {
   propertyId?: string
   propertyToEdit?: Omit<Prisma.PropertyGetPayload<{
     include: {
+      user: true
       location: true
       feature: true
       contact: true
@@ -61,7 +62,6 @@ const STEP_ITEM_LIST = [
 ]
 
 const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }: UpsertPropertyFormProps) => {
-  console.log('propertyToEdit 333', propertyToEdit)
   const router = useRouter()
 
   const { execute: upsertPropertyAction, isExecuting } = useAction(upsertProperty, {
@@ -136,7 +136,6 @@ const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }
   }
 
   const onSubmit = async (data: UpsertPropertyFormSchemaType) => {
-    console.log('data 333', data)
     const pictureUrls = await uploadPropertyPictures(imagesToUpload)
 
     if (!pictureUrls) {
@@ -146,6 +145,7 @@ const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }
 
     upsertPropertyAction({
       ...data,
+      ownerId: propertyToEdit?.user.id ?? "",
       pictures: pictureUrls,
       id: propertyId,
       pictureIdsToDelete: dbPictures.toDeleteIds,

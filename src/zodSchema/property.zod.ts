@@ -71,6 +71,7 @@ export const upsertPropertyActionSchema = upsertPropertyFormSchema.extend({
   pictures: z.array(z.string()),
   pictureIdsToDelete: z.array(z.string()).optional(),
   id: z.string().optional(),
+  ownerId: z.string().optional(),
 }).refine((data) => {
   if (data.id) {
     return true

@@ -10,11 +10,24 @@ export const upsertProperty = authAction
   .schema(upsertPropertyActionSchema, {
     handleValidationErrorsShape: (errors) => flattenValidationErrors(errors).fieldErrors
   })
-  .action(async ({ ctx, parsedInput: { basic, location, features, contact, pictures, id, pictureIdsToDelete } }) => {
+  .action(async ({ ctx, parsedInput: {
+    basic,
+    location,
+    features,
+    contact,
+    pictures,
+    id = '',
+    ownerId = '',
+    pictureIdsToDelete = []
+  } }) => {
+    if (ctx.user.id !== ownerId) {
+      throw new Error("You are not authorized to edit this property")
+    }
+
     try {
       const newProperty = await prisma.property.upsert({
         where: {
-          id: id
+          id
         },
         update: {
           name: basic.name,

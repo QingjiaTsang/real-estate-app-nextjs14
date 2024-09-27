@@ -21,7 +21,15 @@ type PictureFormProps = {
   className?: string
 }
 
-const PictureForm = ({ imagesToUpload, setImagesToUpload, existedPictures, onDeleteExistedPicture, onClickNext, onClickPrevious, className }: PictureFormProps) => {
+const PictureForm = ({
+  imagesToUpload,
+  setImagesToUpload,
+  existedPictures,
+  onDeleteExistedPicture,
+  onClickNext,
+  onClickPrevious,
+  className,
+}: PictureFormProps) => {
 
   const handleDeleteImage = (index: number) => {
     setImagesToUpload(prev => prev.filter((_, i) => i !== index))

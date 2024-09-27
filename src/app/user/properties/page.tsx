@@ -10,7 +10,6 @@ import Link from "next/link";
 import {
   createSearchParamsCache,
   parseAsInteger,
-  parseAsString
 } from 'nuqs/server'
 
 const ITEMS_PER_PAGE = 10
@@ -18,6 +17,7 @@ const ITEMS_PER_PAGE = 10
 const searchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
 })
+
 
 const PropertiesPage = async ({
   searchParams
