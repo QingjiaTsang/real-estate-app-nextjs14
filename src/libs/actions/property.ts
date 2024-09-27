@@ -5,18 +5,6 @@ import { addPropertyActionSchema } from "@/zodSchema/property.zod"
 import prisma from "@/libs/prisma"
 import { flattenValidationErrors } from "next-safe-action"
 import { authAction } from "@/libs/actions/safeAction"
-import { z } from "zod"
-
-const includeSchema = z.object({
-  include: z.object({
-    type: z.boolean().optional(),
-    status: z.boolean().optional(),
-    location: z.boolean().optional(),
-    feature: z.boolean().optional(),
-    pictures: z.boolean().optional(),
-    contact: z.boolean().optional(),
-  }).optional()
-})
 
 export const addProperty = authAction
   .schema(addPropertyActionSchema, {
@@ -84,45 +72,3 @@ export const addProperty = authAction
       throw new Error("Failed to create property")
     }
   })
-
-// export const getAllProperties = authAction
-//   .schema(includeSchema)
-//   .action(async ({ ctx, parsedInput: { include } }) => {
-//     const properties = await prisma.property.findMany({
-//       include: include
-//     })
-//     return properties
-//   })
-
-// export const getPropertiesByAuth = authAction
-//   .schema(includeSchema)
-//   .action(async ({ ctx, parsedInput: { include } }) => {
-//     const properties = await prisma.property.findMany({
-//       where: {
-//         userId: ctx.user.id,
-//       },
-//       include: include
-//     })
-
-//     type PropertyWithInclude = Prisma.PropertyGetPayload<{ include: typeof include }>
-
-//     return properties.map((property): PropertyWithInclude => {
-//       const { price, ...rest } = property;
-//       return {
-//         ...rest,
-//         price: price instanceof Prisma.Decimal ? price : new Prisma.Decimal(price as unknown as string),
-//       } as PropertyWithInclude;
-//     });
-//   })
-
-// export const getPropertyById = authAction
-//   .schema(includeSchema.extend({ id: z.string() }))
-//   .action(async ({ ctx, parsedInput: { id, include } }) => {
-//     const property = await prisma.property.findUnique({
-//       where: {
-//         id,
-//       },
-//       include: include
-//     })
-//     return property
-//   })

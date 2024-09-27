@@ -87,7 +87,7 @@ const seed = async () => {
 };
 
 const main = async () => {
-  await Promise.all(Array(30).fill(0).map(async () => seed()))
+  await Promise.all(Array(30).fill(0).map(() => seed()))
 
   console.log('All seeding completed');
 }
