@@ -1,4 +1,4 @@
-import { User } from '@prisma/client'
+import { Prisma, } from '@prisma/client'
 
 import { Card, Link, Image, Button, Avatar } from "@nextui-org/react";
 import SectionTitle from '@/app/user/profile/_components/SectionTitle';
@@ -9,11 +9,14 @@ import 'react-medium-image-zoom/dist/styles.css'
 
 
 type UserProfileProps = {
-  user: User
+  user: Prisma.UserGetPayload<{
+    include: {
+      properties: true
+    }
+  }>
 }
 
 const UserProfile = ({ user }: UserProfileProps) => {
-
   return (
     <div className='container mx-auto p-4'>
       <Card className='p-4'>
@@ -28,7 +31,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
           <Attribute title="Name" value={`${user.firstName} ${user.lastName}`} />
           <Attribute title="Email" value={user.email} />
           <Attribute title="Registered On" value={user.createdAt.toLocaleDateString()} />
-          <Attribute title="Properties Posted" value={1} />
+          <Attribute title="Properties Posted" value={user.properties.length} />
         </div>
       </Card>
     </div>

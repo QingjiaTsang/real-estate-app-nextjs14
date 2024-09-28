@@ -1,10 +1,20 @@
-import { getDbUser } from "@/libs/actions/user";
 
 import UserProfile from "@/app/user/profile/_components/UserProfile";
+import prisma from "@/libs/prisma";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 const ProfilePage = async () => {
-  const dbUserResult = await getDbUser();
-  const user = dbUserResult?.data;
+  const { getUser } = await getKindeServerSession()
+  const kindleUser = await getUser()
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: kindleUser?.id
+    },
+    include: {
+      properties: true
+    }
+  })
 
   return (
     <div>

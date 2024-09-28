@@ -12,9 +12,9 @@ type EditPropertyPageProps = {
 
 const EditPropertyPage = async ({ params }: EditPropertyPageProps) => {
   const { getUser } = getKindeServerSession()
-  const user = await getUser()
 
-  const [propertyStatusList, propertyTypeList, propertyToEdit] = await Promise.all([
+  const [user, propertyStatusList, propertyTypeList, propertyToEdit] = await Promise.all([
+    getUser(),
     prisma.propertyStatus.findMany(),
     prisma.propertyType.findMany(),
     prisma.property.findUnique({
@@ -38,7 +38,7 @@ const EditPropertyPage = async ({ params }: EditPropertyPageProps) => {
   }
 
   // Note: Don't forget to check if the user is authorized to edit the property
-  if (user && user.id !== propertyToEdit.userId) {
+  if (!user || user.id !== propertyToEdit.userId) {
     redirect('/unauthorized')
   }
 

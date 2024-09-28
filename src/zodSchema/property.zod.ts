@@ -83,3 +83,7 @@ export const upsertPropertyActionSchema = upsertPropertyFormSchema.extend({
 })
 
 export type UpsertPropertyFormSchemaType = z.infer<typeof upsertPropertyFormSchema>
+
+export const deletePropertyByIdActionSchema = z.object({
+  id: z.string(),
+})

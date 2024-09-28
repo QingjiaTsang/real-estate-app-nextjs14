@@ -1,6 +1,5 @@
 'use server'
-import { Prisma, Property } from "@prisma/client"
-import { upsertPropertyActionSchema } from "@/zodSchema/property.zod"
+import { deletePropertyByIdActionSchema, upsertPropertyActionSchema } from "@/zodSchema/property.zod"
 
 import prisma from "@/libs/prisma"
 import { flattenValidationErrors } from "next-safe-action"
@@ -124,5 +123,32 @@ export const upsertProperty = authAction
     } catch (error) {
       console.error("Error creating property:", error)
       throw new Error("Failed to create property")
+    }
+  })
+
+export const deletePropertyById = authAction
+  .schema(deletePropertyByIdActionSchema, {
+    handleValidationErrorsShape: (errors) => flattenValidationErrors(errors).fieldErrors
+  })
+  .action(async ({ ctx, parsedInput: { id } }) => {
+    const property = await prisma.property.findUnique({
+      where: {
+        id
+      }
+    })
+
+    if (ctx.user.id !== property?.userId) {
+      throw new Error("You are not authorized to delete this property")
+    }
+
+    try {
+      await prisma.property.delete({
+        where: {
+          id
+        }
+      })
+    } catch (error) {
+      console.error("Error deleting property:", error)
+      throw new Error("Failed to delete property")
     }
   })

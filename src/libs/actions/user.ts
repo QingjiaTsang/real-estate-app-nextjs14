@@ -39,6 +39,9 @@ export const updateUserAvatar = authAction
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: { avatarUrl },
+      include: {
+        properties: true,
+      },
     })
 
     if (!updatedUser) {

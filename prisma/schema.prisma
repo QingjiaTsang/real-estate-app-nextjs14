@@ -46,18 +46,18 @@ model Property {
 
   // one-to-one relationship: one property can have one location
   locationId String           @unique
-  location   PropertyLocation @relation(fields: [locationId], references: [id])
+  location   PropertyLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
 
   // one-to-one relationship: one property can have one feature
   featureId String          @unique
-  feature   PropertyFeature @relation(fields: [featureId], references: [id])
+  feature   PropertyFeature @relation(fields: [featureId], references: [id], onDelete: Cascade)
 
   // one-to-many relationship: one property can have many pictures
   pictures PropertyPicture[]
 
   // one-to-one relationship: one property can have one contact
   contactId String          @unique
-  contact   PropertyContact @relation(fields: [contactId], references: [id])
+  contact   PropertyContact @relation(fields: [contactId], references: [id], onDelete: Cascade)
 }
 
 model PropertyType {
@@ -104,7 +104,7 @@ model PropertyPicture {
   url String
 
   propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }
 
 model PropertyContact {
