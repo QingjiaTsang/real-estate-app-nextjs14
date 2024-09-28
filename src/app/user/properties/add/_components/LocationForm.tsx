@@ -36,7 +36,7 @@ const LocationForm = ({ onClickNext, onClickPrevious, className }: LocationFormP
               >
                 {COUNTRY_LIST.map((country) => (
                   <SelectItem
-                    key={country.name + country.dialCode}
+                    key={country.name}
                     value={country.name}
                     className="min-w-40"
                   >

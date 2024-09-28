@@ -45,19 +45,16 @@ model Property {
   status   PropertyStatus @relation(fields: [statusId], references: [id])
 
   // one-to-one relationship: one property can have one location
-  locationId String           @unique
-  location   PropertyLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  location PropertyLocation?
 
   // one-to-one relationship: one property can have one feature
-  featureId String          @unique
-  feature   PropertyFeature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+  feature PropertyFeature?
 
   // one-to-many relationship: one property can have many pictures
   pictures PropertyPicture[]
 
   // one-to-one relationship: one property can have one contact
-  contactId String          @unique
-  contact   PropertyContact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contact PropertyContact?
 }
 
 model PropertyType {
@@ -83,7 +80,8 @@ model PropertyLocation {
   landmarks String
   country   String
 
-  property Property?
+  propertyId String   @unique
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }
 
 model PropertyFeature {
@@ -96,7 +94,8 @@ model PropertyFeature {
   hasGardenOrYard   Boolean
   hasBalconyOrPatio Boolean
 
-  property Property?
+  propertyId String   @unique
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }
 
 model PropertyPicture {
@@ -113,5 +112,6 @@ model PropertyContact {
   phone String
   email String
 
-  property Property?
+  propertyId String   @unique
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }

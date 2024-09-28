@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 
 // Note: the path to the [id]/delete segment can use the (.) matcher rather than (..), since @modal is a slot and not a segment. 
 // so we can use the (.)[id] matcher to match the [id]/delete route and pass it to the modal.
+// reference: https://nextjs.org/docs/app/building-your-application/routing/intercepting-routes#modals
 
 type DeleteModalParallelPageProps = {
   params: {

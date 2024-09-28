@@ -1,5 +1,8 @@
 import prisma from "@/libs/prisma";
 import { faker } from "@faker-js/faker";
+import CountryList from 'country-list-with-dial-code-and-flag'
+
+const COUNTRY_LIST = CountryList.getAll().map((country) => ({ flag: country.flag, name: country.name, dialCode: country.dialCode }))
 
 const seed = async () => {
   const existingUserIds = [
@@ -25,6 +28,8 @@ const seed = async () => {
   ];
 
   const randomPropertyStatusId = existingPropertyStatusIds[Math.floor(Math.random() * existingPropertyStatusIds.length)];
+
+  const randomCountry = COUNTRY_LIST[Math.floor(Math.random() * COUNTRY_LIST.length)];
 
   const newProperty = await prisma.property.create({
     data: {
@@ -53,7 +58,7 @@ const seed = async () => {
           state: faker.location.state(),
           zip: faker.location.zipCode(),
           landmarks: faker.lorem.sentence(),
-          country: faker.location.country()
+          country: randomCountry.name,
         }
       },
       feature: {
@@ -87,7 +92,7 @@ const seed = async () => {
 };
 
 const main = async () => {
-  await Promise.all(Array(30).fill(0).map(() => seed()))
+  await Promise.all(Array(100).fill(0).map(() => seed()))
 
   console.log('All seeding completed');
 }
