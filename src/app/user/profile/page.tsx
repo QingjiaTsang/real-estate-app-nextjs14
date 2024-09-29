@@ -5,11 +5,11 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 const ProfilePage = async () => {
   const { getUser } = await getKindeServerSession()
-  const kindleUser = await getUser()
+  const kindeUser = await getUser()
 
   const user = await prisma.user.findUnique({
     where: {
-      id: kindleUser?.id
+      id: kindeUser?.id
     },
     include: {
       properties: true

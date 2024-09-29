@@ -1,4 +1,4 @@
-import { Prisma, } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 
 import { Card, Link, Image, Button, Avatar } from "@nextui-org/react";
 import SectionTitle from '@/app/user/profile/_components/SectionTitle';

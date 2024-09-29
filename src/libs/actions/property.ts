@@ -152,3 +152,30 @@ export const deletePropertyById = authAction
       throw new Error("Failed to delete property")
     }
   })
+
+const PAGE_SIZE = 12
+export const getPropertiesByPage = async (page: number, take: number = PAGE_SIZE) => {
+  const properties = await prisma.property.findMany({
+    select: {
+      id: true,
+      name: true,
+      price: true,
+      location: {
+        select: {
+          city: true,
+          state: true,
+          country: true
+        }
+      },
+      pictures: {
+        select: {
+          url: true
+        }
+      },
+    },
+    take,
+    skip: (page - 1) * take
+  })
+
+  return properties
+}

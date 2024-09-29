@@ -4,25 +4,33 @@ import PageTitle from '@/app/components/PageTitle'
 import { Card } from '@nextui-org/card'
 import PropertyInfoCard from '@/app/property/[id]/_components/PropertyInfoCard'
 import ImageSlider from '@/app/property/[id]/_components/ImageSlider'
+import { Button, user } from '@nextui-org/react'
+import Link from 'next/link'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 type PropertyDetailPageProps = {
   params: { id: string }
 }
 
 const PropertyDetailPage = async ({ params }: PropertyDetailPageProps) => {
-  const property = await prisma.property.findUnique({
-    where: {
-      id: params.id,
-    },
-    include: {
-      type: true,
-      status: true,
-      location: true,
-      feature: true,
-      pictures: true,
-      contact: true,
-    }
-  })
+  const { getUser } = await getKindeServerSession()
+
+  const [kindeUser, property] = await Promise.all([
+    getUser(),
+    prisma.property.findUnique({
+      where: {
+        id: params.id,
+      },
+      include: {
+        user: true,
+        type: true,
+        status: true,
+        location: true,
+        feature: true,
+        pictures: true,
+        contact: true,
+      }
+    })])
 
   if (!property) {
     return notFound()
@@ -30,7 +38,14 @@ const PropertyDetailPage = async ({ params }: PropertyDetailPageProps) => {
 
   return (
     <div>
-      <PageTitle title={'Property Details'} />
+      <PageTitle
+        title={'Property Details'}
+        rightContent={
+          property.user.id === kindeUser.id && (
+            <Button color='secondary' href={`/user/properties/${property.id}/edit`} as={Link}>Edit Property</Button>
+          )
+        }
+      />
       <div className='container mx-auto p-4'>
         <div className='text-lg md:text-xl font-bold mb-2 md:my-4'>{property.name}</div>
 
@@ -39,7 +54,7 @@ const PropertyDetailPage = async ({ params }: PropertyDetailPageProps) => {
             <ImageSlider images={property.pictures} />
           </Card>
           <Card className='w-full md:w-[360px] lg:w-[1/3] '>
-            <PropertyInfoCard features={property.feature} contact={property.contact} location={property.location} />
+            <PropertyInfoCard features={property.feature!} contact={property.contact!} location={property.location!} />
           </Card>
         </div>
 

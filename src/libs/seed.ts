@@ -81,8 +81,11 @@ const seed = async () => {
       },
       pictures: {
         create: [
-          { url: faker.image.url() },
-          { url: faker.image.url() }
+          { url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }) },
+          { url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }) },
+          { url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }) },
+          { url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }) },
+          { url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }) },
         ]
       }
     }
