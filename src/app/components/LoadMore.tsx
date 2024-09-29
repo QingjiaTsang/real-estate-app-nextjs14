@@ -7,8 +7,12 @@ import { Spinner } from '@nextui-org/react'
 import { useEffect, useState } from 'react';
 import { useInView } from "react-intersection-observer";
 
+import { parseAsString, useQueryState } from 'nuqs';
+
 
 const LoadMore = () => {
+  const [search] = useQueryState('search', parseAsString.withDefault(''))
+
   const { ref, inView } = useInView()
 
   const [page, setPage] = useState(2)
@@ -18,7 +22,7 @@ const LoadMore = () => {
 
   const loadMoreBeers = async () => {
     const nextPage = page + 1
-    const newProperties = await getPropertiesByPage(nextPage) ?? []
+    const newProperties = await getPropertiesByPage(nextPage, search) ?? []
     setProperties([...properties, ...newProperties])
     setPage(nextPage)
     if (newProperties.length === 0) {
@@ -32,17 +36,21 @@ const LoadMore = () => {
     }
   }, [inView]);
 
+  useEffect(() => {
+    setProperties([])
+    setPage(2)
+    setNoMore(false)
+  }, [search])
+
   return (
     <>
-      <PropertyCardsContainer>
-        {properties.map((property) => (
-          <PropertyCard key={property.id} property={property} />
-        ))}
-      </PropertyCardsContainer>
+      {properties.map((property) => (
+        <PropertyCard key={property.id} property={property} />
+      ))}
       {
         !noMore && (
           <div
-            className="flex justify-center items-center mt-8 col-span-1 sm:col-span-2 md:col-span-3"
+            className="flex justify-center items-center col-span-full"
             ref={ref}
           >
             <Spinner />

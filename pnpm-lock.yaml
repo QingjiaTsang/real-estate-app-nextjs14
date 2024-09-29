@@ -67,6 +67,9 @@ dependencies:
   swiper:
     specifier: ^11.1.14
     version: 11.1.14
+  use-debounce:
+    specifier: ^10.0.3
+    version: 10.0.3(react@18.0.0)
   uuid:
     specifier: ^10.0.0
     version: 10.0.0
@@ -9577,6 +9580,15 @@ packages:
     resolution: {integrity: sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.0.0
+    dev: false
+
+  /use-debounce@10.0.3(react@18.0.0):
+    resolution: {integrity: sha512-DxQSI9ZKso689WM1mjgGU3ozcxU1TJElBJ3X6S4SMzMNcm2lVH0AHmyXB+K7ewjz2BSUKJTDqTcwtSMRfB89dg==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      react: '*'
     dependencies:
       react: 18.0.0
     dev: false

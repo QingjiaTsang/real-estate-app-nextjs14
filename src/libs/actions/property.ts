@@ -154,8 +154,16 @@ export const deletePropertyById = authAction
   })
 
 const PAGE_SIZE = 12
-export const getPropertiesByPage = async (page: number, take: number = PAGE_SIZE) => {
+export const getPropertiesByPage = async (page: number, search: string = '') => {
   const properties = await prisma.property.findMany({
+    ...(!!search && {
+      where: {
+        name: {
+          contains: search,
+          mode: 'insensitive'
+        }
+      },
+    }),
     select: {
       id: true,
       name: true,
@@ -173,8 +181,8 @@ export const getPropertiesByPage = async (page: number, take: number = PAGE_SIZE
         }
       },
     },
-    take,
-    skip: (page - 1) * take
+    take: PAGE_SIZE,
+    skip: (page - 1) * PAGE_SIZE
   })
 
   return properties
