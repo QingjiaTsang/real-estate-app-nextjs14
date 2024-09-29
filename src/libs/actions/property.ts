@@ -158,10 +158,20 @@ export const getPropertiesByPage = async (page: number, search: string = '') => 
   const properties = await prisma.property.findMany({
     ...(!!search && {
       where: {
-        name: {
-          contains: search,
-          mode: 'insensitive'
-        }
+        OR: [
+          { name: { contains: search, mode: 'insensitive' } },
+          { description: { contains: search, mode: 'insensitive' } },
+          {
+            location: {
+              OR: [
+                { address: { contains: search, mode: 'insensitive' } },
+                { state: { contains: search, mode: 'insensitive' } },
+                { city: { contains: search, mode: 'insensitive' } },
+                { landmarks: { contains: search, mode: 'insensitive' } },
+              ]
+            }
+          }
+        ]
       },
     }),
     select: {
