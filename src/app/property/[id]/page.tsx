@@ -1,10 +1,10 @@
-import PageTitle from '@/app/components/PageTitle'
+import PageHeader from '@/app/components/PageHeader'
 import ImageSlider from '@/app/property/[id]/_components/ImageSlider'
 import PropertyInfoCard from '@/app/property/[id]/_components/PropertyInfoCard'
 import prisma from '@/libs/prisma'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { Card } from '@nextui-org/card'
-import { Button } from '@nextui-org/react'
+import { Button, cn } from '@nextui-org/react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -39,14 +39,22 @@ async function PropertyDetailPage({ params }: PropertyDetailPageProps) {
 
   return (
     <div>
-      <PageTitle
+      <PageHeader
         title="Property Details"
         rightContent={
           property.user.id === kindeUser?.id && (
-            <Button color="secondary" href={`/user/properties/${property.id}/edit`} as={Link}>Edit</Button>
+            <Button
+              color="secondary"
+              href={`/user/properties/${property.id}/edit`}
+              as={Link}
+            >
+              Edit
+            </Button>
           )
         }
+        titleClassName={cn({ 'ml-10 md:ml-0': property.user.id === kindeUser?.id })}
       />
+
       <div className="container mx-auto p-4">
         <div className="text-lg md:text-xl font-bold mb-2 md:my-4">{property.name}</div>
 

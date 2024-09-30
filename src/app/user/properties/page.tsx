@@ -1,4 +1,4 @@
-import PageTitle from '@/app/components/PageTitle'
+import PageHeader from '@/app/components/PageHeader'
 import PropertyTable from '@/app/user/properties/_components/PropertyTable'
 import prisma from '@/libs/prisma'
 
@@ -51,10 +51,20 @@ async function PropertiesPage({
 
   return (
     <>
-      <PageTitle
+      <PageHeader
         title="Properties"
-        rightContent={<Button color="secondary" href="/user/properties/add" as={Link}>Add Property</Button>}
+        rightContent={
+          <Button
+            color="secondary"
+            href="/user/properties/add"
+            as={Link}
+          >
+            Add
+          </Button>
+        }
+        titleClassName="ml-10 md:ml-0"
       />
+
       <PropertyTable
         properties={properties}
         totalPage={totalPage}

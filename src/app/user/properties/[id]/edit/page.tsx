@@ -1,4 +1,4 @@
-import PageTitle from '@/app/components/PageTitle'
+import PageHeader from '@/app/components/PageHeader'
 import UpsertPropertyForm from '@/app/user/properties/add/_components/UpsertPropertyForm'
 import prisma from '@/libs/prisma'
 
@@ -43,7 +43,8 @@ async function EditPropertyPage({ params }: EditPropertyPageProps) {
 
   return (
     <div>
-      <PageTitle title="Edit Property" />
+      <PageHeader title="Edit Property" />
+
       <UpsertPropertyForm
         statusList={propertyStatusList}
         typeList={propertyTypeList}

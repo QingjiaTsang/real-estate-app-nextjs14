@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
-import { cn } from '@nextui-org/react'
+import { cn, } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 
 interface PageTitleProps {
@@ -9,8 +9,9 @@ interface PageTitleProps {
   backCaption?: string
   backHref?: string
   backIcon?: React.ReactNode
-  className?: string
   rightContent?: React.ReactNode
+  className?: string
+  titleClassName?: string
 }
 
 function PageTitle({
@@ -18,10 +19,12 @@ function PageTitle({
   backCaption,
   backHref,
   backIcon = <ArrowLeftIcon className="h-6 w-6 md:h-7 md:w-7" />,
-  className,
   rightContent,
+  className,
+  titleClassName,
 }: PageTitleProps) {
   const router = useRouter()
+
 
   const handleBack = () => {
     if (backHref) {
@@ -46,8 +49,8 @@ function PageTitle({
         >
           {backIcon}
         </button>
-        <h1 className="text-xl font-bold md:text-2xl text-white ml-10 md:ml-0">{title}</h1>
-        <div>{rightContent}</div>
+        <h1 className={cn('text-xl font-bold md:text-2xl text-white', titleClassName)}>{title}</h1>
+        <div className={cn({ 'w-6': !rightContent })}>{rightContent}</div>
       </div>
     </div>
 

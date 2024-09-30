@@ -1,4 +1,4 @@
-import PageTitle from '@/app/components/PageTitle'
+import PageHeader from '@/app/components/PageHeader'
 
 import UpsertPropertyForm from '@/app/user/properties/add/_components/UpsertPropertyForm'
 import prisma from '@/libs/prisma'
@@ -13,10 +13,16 @@ async function AddPropertyPage() {
 
   return (
     <div>
-      <PageTitle
-        title="Properties"
-        rightContent={<Button color="secondary" href="/user/properties/add" as={Link}>Add Property</Button>}
+      <PageHeader
+        title="Add Property"
+        rightContent={
+          <Button color="secondary" href="/user/properties/add" as={Link}>
+            Add
+          </Button>
+        }
+        titleClassName="ml-10 md:ml-0"
       />
+
       <UpsertPropertyForm statusList={propertyStatusList} typeList={propertyTypeList} />
     </div>
   )

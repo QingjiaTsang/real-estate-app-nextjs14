@@ -1,4 +1,4 @@
-import PageTitle from '@/app/components/PageTitle'
+import PageHeader from '@/app/components/PageHeader'
 
 function ProfileLayout({
   children,
@@ -7,7 +7,7 @@ function ProfileLayout({
 }>) {
   return (
     <div>
-      <PageTitle title="Profile" />
+      <PageHeader title="Profile" />
       {children}
     </div>
   )
