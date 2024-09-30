@@ -1,5 +1,4 @@
 'use client'
-import type VConsole from 'vconsole'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { Input } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
