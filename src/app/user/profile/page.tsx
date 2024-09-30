@@ -9,7 +9,7 @@ const ProfilePage = async () => {
 
   const user = await prisma.user.findUnique({
     where: {
-      id: kindeUser?.id
+      id: kindeUser?.id ?? ''
     },
     include: {
       properties: true

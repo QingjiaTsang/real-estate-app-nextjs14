@@ -1,12 +1,14 @@
 import React from 'react'
 
-import { Button, User, } from '@nextui-org/react'
+import { Button, user, User, } from '@nextui-org/react'
 import Link from 'next/link'
 import { getDbUser } from '@/libs/actions/user'
 
 const UserAuthPanel = async () => {
   const dbUserResult = await getDbUser()
+  console.log('dbUserResult', dbUserResult)
   const user = dbUserResult?.data
+
 
   if (!user) {
     return (

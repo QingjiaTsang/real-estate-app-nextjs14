@@ -7,15 +7,10 @@ export async function GET(request: NextRequest) {
   const { getUser } = await getKindeServerSession()
   const kindeUser = await getUser()
 
-
-  if (!kindeUser || !kindeUser.id) {
-    throw new Error(`Something went wrong with authentication ${kindeUser}`)
-  }
-
   try {
     const dbUser = await prisma.user.findUnique({
       where: {
-        id: kindeUser.id
+        id: kindeUser?.id ?? ''
       }
     })
 

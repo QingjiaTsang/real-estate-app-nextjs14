@@ -41,7 +41,7 @@ const PropertyDetailPage = async ({ params }: PropertyDetailPageProps) => {
       <PageTitle
         title={'Property Details'}
         rightContent={
-          property.user.id === kindeUser.id && (
+          property.user.id === kindeUser?.id && (
             <Button color='secondary' href={`/user/properties/${property.id}/edit`} as={Link}>Edit Property</Button>
           )
         }

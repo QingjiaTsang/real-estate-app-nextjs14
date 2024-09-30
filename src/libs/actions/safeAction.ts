@@ -29,7 +29,7 @@ export const authAction = action.use(async ({ ctx, next }) => {
 
   const user = await prisma.user.findUnique({
     where: {
-      id: kindeUser.id
+      id: kindeUser?.id ?? ''
     }
   })
 
