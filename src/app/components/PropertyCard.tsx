@@ -32,8 +32,8 @@ function PropertyCard({ property }: { property: Property }) {
         className="max-w-full object-cover rounded-none"
       />
       <div className="p-4">
-        <h3 className="text-lg font-bold">{property?.name}</h3>
-        <p className="text-sm text-gray-500">
+        <h3 className="text-lg font-bold flex-nowrap truncate">{property?.name}</h3>
+        <p className="text-sm text-gray-500 line-clamp-2">
           {property?.location?.city}
           ,
           {' '}

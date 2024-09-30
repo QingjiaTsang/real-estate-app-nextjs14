@@ -33,21 +33,24 @@ function PageTitle({
   }
 
   return (
-    <div
-      className={cn(
-        'flex items-center justify-between p-4 bg-primary-400',
-        className,
-      )}
-    >
-      <button
-        onClick={handleBack}
-        className="text-lg font-bold text-white md:text-xl"
+    <div>
+      <div
+        className={cn(
+          'flex items-center justify-between p-4 bg-primary-400',
+          className,
+        )}
       >
-        {backIcon}
-      </button>
-      <h1 className="text-xl font-bold md:text-2xl text-white">{title}</h1>
-      <div>{rightContent}</div>
+        <button
+          onClick={handleBack}
+          className="text-lg font-bold text-white md:text-xl"
+        >
+          {backIcon}
+        </button>
+        <h1 className="text-xl font-bold md:text-2xl text-white ml-10 md:ml-0">{title}</h1>
+        <div>{rightContent}</div>
+      </div>
     </div>
+
     // <div className="flex items-center justify-between gap-2 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 p-4">
     //   <h1 className="text-xl font-bold md:text-2xl">{title}</h1>
     //   {backCaption && backHref && (

@@ -29,30 +29,30 @@ export default function NavBar({ children }: NavBarProps) {
 
   const menuItems = isAuthenticated
     ? [
-        {
-          textValue: 'Profile',
-          href: '/user/profile',
-        },
-        {
-          textValue: 'Properties',
-          href: '/user/properties',
-        },
-        {
-          textValue: 'Log Out',
-          href: '/api/auth/logout',
-        },
+      {
+        textValue: 'Profile',
+        href: '/user/profile',
+      },
+      {
+        textValue: 'Properties',
+        href: '/user/properties',
+      },
+      {
+        textValue: 'Log Out',
+        href: '/api/auth/logout',
+      },
 
-      ]
+    ]
     : [
-        {
-          textValue: 'Log In',
-          href: '/api/auth/login',
-        },
-        {
-          textValue: 'Sign Up',
-          href: '/api/auth/signup',
-        },
-      ]
+      {
+        textValue: 'Log In',
+        href: '/api/auth/login',
+      },
+      {
+        textValue: 'Sign Up',
+        href: '/api/auth/signup',
+      },
+    ]
 
   return (
     <Navbar
@@ -77,8 +77,8 @@ export default function NavBar({ children }: NavBarProps) {
       </NavbarContent>
 
       {/* desktop menu */}
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden sm:flex">
+      <NavbarContent justify="end" className="hidden sm:flex">
+        <NavbarItem>
           <Dropdown placement="bottom-end">
             <DropdownTrigger>
               <div>{children}</div>

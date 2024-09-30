@@ -31,6 +31,10 @@ export async function GET() {
   catch (error) {
     console.error('error', error)
     // logout from kinde provider if db user creation fails
-    return NextResponse.redirect(`https://${process.env.VERCEL_URL}/api/auth/logout`)
+    const logoutUrl = process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/api/auth/logout'
+      : `https://${process.env.VERCEL_URL}/api/auth/logout`
+
+    return NextResponse.redirect(logoutUrl)
   }
 }

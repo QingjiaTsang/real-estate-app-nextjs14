@@ -6,9 +6,9 @@ const COUNTRY_LIST = CountryList.getAll().map(country => ({ flag: country.flag, 
 
 async function seed() {
   const existingUserIds = [
-    'kp_2ec30821f32e4830aff51885a4fc8ff3',
-    'kp_6e320b668e2b42cabd1b14e266e51e6f',
-    'kp_ad79a0efd8f442f18a96f5ad92fd37cf',
+    'kp_4ef84799d53b4d7d87afbfd3e41fff4e',
+    'kp_76a47bbc519b46128209666e4223453d',
+    'kp_ff632669ef5544169e672be0527f8279',
   ]
 
   const randomUserId = existingUserIds[Math.floor(Math.random() * existingUserIds.length)]

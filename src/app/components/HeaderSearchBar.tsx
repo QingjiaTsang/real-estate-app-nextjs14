@@ -22,19 +22,6 @@ function HeaderSearchBar() {
     router.refresh()
   }, [search])
 
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      let vConsole: VConsole
-      const loadVConsole = async () => {
-        const VConsole = (await import('vconsole')).default
-      }
-      loadVConsole()
-      return () => {
-        if (vConsole)
-          vConsole.destroy()
-      }
-    }
-  }, [])
 
   return (
     <div

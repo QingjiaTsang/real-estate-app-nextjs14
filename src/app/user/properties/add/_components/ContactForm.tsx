@@ -66,6 +66,7 @@ function ContactForm({ isLoading, onClickPrevious, className }: ContactFormProps
             onClick={onClickPrevious}
             startContent={<ChevronLeftIcon className="h-4 w-4" />}
             className="w-36"
+            isDisabled={isLoading}
           >
             Previous
           </Button>
