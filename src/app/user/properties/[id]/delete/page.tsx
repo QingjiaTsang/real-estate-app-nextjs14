@@ -1,16 +1,16 @@
+import DeleteButton from '@/app/user/properties/_components/DeleteButton'
+import { deletePropertyById } from '@/libs/actions/property'
 import prisma from '@/libs/prisma'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-import { notFound, redirect } from 'next/navigation'
 import { Button, Card } from '@nextui-org/react'
 import Link from 'next/link'
-import { deletePropertyById } from '@/libs/actions/property'
-import DeleteButton from '@/app/user/properties/_components/DeleteButton'
+import { notFound, redirect } from 'next/navigation'
 
-type DeletePropertyPageProps = {
+interface DeletePropertyPageProps {
   params: { id: string }
 }
 
-const DeletePropertyPage = async ({ params }: DeletePropertyPageProps) => {
+async function DeletePropertyPage({ params }: DeletePropertyPageProps) {
   const { getUser } = getKindeServerSession()
 
   const [user, property] = await Promise.all([
@@ -53,17 +53,21 @@ const DeletePropertyPage = async ({ params }: DeletePropertyPageProps) => {
         <div className="mt-4 space-y-4">
           <p className="text-lg font-medium text-gray-900">{property.name}</p>
           <p className="text-sm text-gray-500">
-            {property.type.value} • {property.status.value}
+            {property.type.value}
+            {' '}
+            •
+            {property.status.value}
           </p>
           <p className="text-sm text-gray-500">
-            ${property.price.toLocaleString()}
+            $
+            {property.price.toLocaleString()}
           </p>
         </div>
 
         <div className="flex justify-between space-x-4">
           <Button
             as={Link}
-            href={`/user/properties`}
+            href="/user/properties"
             className="w-full py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
             Cancel

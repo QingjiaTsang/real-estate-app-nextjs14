@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-compiler: {
+  compiler: {
     styledComponents: {
       displayName: false,
     },
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

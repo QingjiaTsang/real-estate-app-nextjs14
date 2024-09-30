@@ -1,22 +1,21 @@
-import React from 'react'
-
-import { Button, user, User, } from '@nextui-org/react'
-import Link from 'next/link'
 import { getDbUser } from '@/libs/actions/user'
 
-const UserAuthPanel = async () => {
+import { Button, User } from '@nextui-org/react'
+import Link from 'next/link'
+import React from 'react'
+
+async function UserAuthPanel() {
   const dbUserResult = await getDbUser()
   console.log('dbUserResult', dbUserResult)
   const user = dbUserResult?.data
 
-
   if (!user) {
     return (
       <div className="flex items-center gap-2">
-        <Button as={Link} href='/api/auth/login'>
+        <Button as={Link} href="/api/auth/login">
           Login
         </Button>
-        <Button as={Link} color="primary" variant="flat" href='/api/auth/register'>
+        <Button as={Link} color="primary" variant="flat" href="/api/auth/register">
           Sign Up
         </Button>
       </div>

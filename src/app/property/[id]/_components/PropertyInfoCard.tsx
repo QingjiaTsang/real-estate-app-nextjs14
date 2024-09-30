@@ -1,13 +1,13 @@
-import { PropertyFeature, PropertyContact, PropertyLocation } from "@prisma/client"
-import { Divider } from "@nextui-org/divider"
+import type { PropertyContact, PropertyFeature, PropertyLocation } from '@prisma/client'
+import { Divider } from '@nextui-org/divider'
 
-type PropertyInfoCardProps = {
+interface PropertyInfoCardProps {
   features: PropertyFeature
   contact: PropertyContact
   location: PropertyLocation
 }
 
-const PropertyInfoCard = ({ features, contact, location }: PropertyInfoCardProps) => {
+function PropertyInfoCard({ features, contact, location }: PropertyInfoCardProps) {
   return (
     <div className="w-full h-full flex-col bg-white shadow-md rounded-lg overflow-hidden">
       <div className="p-6 flex flex-col gap-y-4">
@@ -46,7 +46,7 @@ const PropertyInfoCard = ({ features, contact, location }: PropertyInfoCardProps
 
 export default PropertyInfoCard
 
-const Title = ({ title }: { title: string }) => {
+function Title({ title }: { title: string }) {
   return (
     <>
       <h2 className="font-semibold text-lg mb-2 text-gray-700">{title}</h2>
@@ -55,7 +55,7 @@ const Title = ({ title }: { title: string }) => {
   )
 }
 
-const Attribute = ({ label, value }: { label: string, value: string | number }) => {
+function Attribute({ label, value }: { label: string, value: string | number }) {
   return (
     <div className="flex justify-between gap-x-2">
       <span className="text-gray-500 font-semibold">{label}</span>

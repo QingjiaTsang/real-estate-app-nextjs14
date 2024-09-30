@@ -1,35 +1,35 @@
-import prisma from "@/libs/prisma";
-import { faker } from "@faker-js/faker";
+import prisma from '@/libs/prisma'
+import { faker } from '@faker-js/faker'
 import CountryList from 'country-list-with-dial-code-and-flag'
 
-const COUNTRY_LIST = CountryList.getAll().map((country) => ({ flag: country.flag, name: country.name, dialCode: country.dialCode }))
+const COUNTRY_LIST = CountryList.getAll().map(country => ({ flag: country.flag, name: country.name, dialCode: country.dialCode }))
 
-const seed = async () => {
+async function seed() {
   const existingUserIds = [
     'kp_2ec30821f32e4830aff51885a4fc8ff3',
     'kp_6e320b668e2b42cabd1b14e266e51e6f',
     'kp_ad79a0efd8f442f18a96f5ad92fd37cf',
   ]
 
-  const randomUserId = existingUserIds[Math.floor(Math.random() * existingUserIds.length)];
+  const randomUserId = existingUserIds[Math.floor(Math.random() * existingUserIds.length)]
 
   const existingPropertyTypeIds = [
     'cm1db4tz900031hbzahsnsg2t',
     'cm1db4tz900041hbzvgktbur7',
-    'cm1db4tz900051hbznq91c8j2'
-  ];
+    'cm1db4tz900051hbznq91c8j2',
+  ]
 
-  const randomPropertyTypeId = existingPropertyTypeIds[Math.floor(Math.random() * existingPropertyTypeIds.length)];
+  const randomPropertyTypeId = existingPropertyTypeIds[Math.floor(Math.random() * existingPropertyTypeIds.length)]
 
   const existingPropertyStatusIds = [
     'cm1db437x00001hbzbi8y35u2',
     'cm1db437z00011hbz1pxmtg51',
-    'cm1db437z00021hbzylrf9ury'
-  ];
+    'cm1db437z00021hbzylrf9ury',
+  ]
 
-  const randomPropertyStatusId = existingPropertyStatusIds[Math.floor(Math.random() * existingPropertyStatusIds.length)];
+  const randomPropertyStatusId = existingPropertyStatusIds[Math.floor(Math.random() * existingPropertyStatusIds.length)]
 
-  const randomCountry = COUNTRY_LIST[Math.floor(Math.random() * COUNTRY_LIST.length)];
+  const randomCountry = COUNTRY_LIST[Math.floor(Math.random() * COUNTRY_LIST.length)]
 
   const newProperty = await prisma.property.create({
     data: {
@@ -38,18 +38,18 @@ const seed = async () => {
       price: faker.number.float({ min: 100000, max: 1000000 }),
       user: {
         connect: {
-          id: randomUserId
-        }
+          id: randomUserId,
+        },
       },
       type: {
         connect: {
-          id: randomPropertyTypeId
-        }
+          id: randomPropertyTypeId,
+        },
       },
       status: {
         connect: {
-          id: randomPropertyStatusId
-        }
+          id: randomPropertyStatusId,
+        },
       },
       location: {
         create: {
@@ -59,7 +59,7 @@ const seed = async () => {
           zip: faker.location.zipCode(),
           landmarks: faker.lorem.sentence(),
           country: randomCountry.name,
-        }
+        },
       },
       feature: {
         create: {
@@ -69,15 +69,15 @@ const seed = async () => {
           area: faker.number.int({ min: 50, max: 300 }),
           hasSwimmingPool: faker.datatype.boolean(),
           hasGardenOrYard: faker.datatype.boolean(),
-          hasBalconyOrPatio: faker.datatype.boolean()
-        }
+          hasBalconyOrPatio: faker.datatype.boolean(),
+        },
       },
       contact: {
         create: {
           name: faker.person.fullName(),
           phone: faker.phone.number(),
-          email: faker.internet.email()
-        }
+          email: faker.internet.email(),
+        },
       },
       pictures: {
         create: [
@@ -86,18 +86,18 @@ const seed = async () => {
           { url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }) },
           { url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }) },
           { url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }) },
-        ]
-      }
-    }
-  });
+        ],
+      },
+    },
+  })
 
-  console.log("Seed data created successfully:", newProperty);
-};
-
-const main = async () => {
-  await Promise.all(Array(100).fill(0).map(() => seed()))
-
-  console.log('All seeding completed');
+  console.log('Seed data created successfully:', newProperty)
 }
 
-main();
+async function main() {
+  await Promise.all(Array.from({ length: 100 }).fill(0).map(() => seed()))
+
+  console.log('All seeding completed')
+}
+
+main()

@@ -1,27 +1,27 @@
 'use client'
-import { Prisma, PropertyPicture, PropertyStatus, PropertyType } from "@prisma/client"
+import type { UpsertPropertyFormSchemaType } from '@/zodSchema/property.zod'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { cn } from "@nextui-org/react"
+import type { Prisma, PropertyPicture, PropertyStatus, PropertyType } from '@prisma/client'
+import BasicForm from '@/app/user/properties/add/_components/BasicForm'
+import ContactForm from '@/app/user/properties/add/_components/ContactForm'
 
-import Stepper from "@/app/user/properties/add/_components/Stepper"
-import BasicForm from "@/app/user/properties/add/_components/BasicForm"
-import LocationForm from "@/app/user/properties/add/_components/LocationForm"
-import FeatureForm from "@/app/user/properties/add/_components/FeatureForm"
-import PictureForm from "@/app/user/properties/add/_components/PictureForm"
-import ContactForm from "@/app/user/properties/add/_components/ContactForm"
-import { useForm, FormProvider } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import FeatureForm from '@/app/user/properties/add/_components/FeatureForm'
+import LocationForm from '@/app/user/properties/add/_components/LocationForm'
+import PictureForm from '@/app/user/properties/add/_components/PictureForm'
+import Stepper from '@/app/user/properties/add/_components/Stepper'
+import { upsertProperty } from '@/libs/actions/property'
+import { uploadPropertyPictures } from '@/libs/upload'
+import { upsertPropertyFormSchema } from '@/zodSchema/property.zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { cn } from '@nextui-org/react'
 
-import { upsertProperty } from "@/libs/actions/property"
-import { useAction } from "next-safe-action/hooks"
-import { toast } from "react-toastify"
-import { upsertPropertyFormSchema, UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
-import { uploadPropertyPictures } from "@/libs/upload"
+import { useRouter } from 'next/navigation'
+import { useAction } from 'next-safe-action/hooks'
+import { useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
-
-type UpsertPropertyFormProps = {
+interface UpsertPropertyFormProps {
   statusList: PropertyStatus[]
   typeList: PropertyType[]
   propertyId?: string
@@ -45,67 +45,67 @@ type UpsertPropertyFormProps = {
 
 const STEP_ITEM_LIST = [
   {
-    label: "Basic",
+    label: 'Basic',
   },
   {
-    label: "Location",
+    label: 'Location',
   },
   {
-    label: "Features",
+    label: 'Features',
   },
   {
-    label: "Pictures",
+    label: 'Pictures',
   },
   {
-    label: "Contact",
+    label: 'Contact',
   },
 ]
 
-const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }: UpsertPropertyFormProps) => {
+function UpsertPropertyForm({ statusList, typeList, propertyId, propertyToEdit }: UpsertPropertyFormProps) {
   const router = useRouter()
 
   const { execute: upsertPropertyAction, isExecuting } = useAction(upsertProperty, {
     onSuccess: () => {
-      toast.success("Property added")
-      router.push("/user/properties")
+      toast.success('Property added')
+      router.push('/user/properties')
     },
     onError: (error) => {
-      console.log("error from addPropertyAction", error)
-      toast.error("Failed to add property")
-    }
+      console.log('error from addPropertyAction', error)
+      toast.error('Failed to add property')
+    },
   })
 
   const methods = useForm<UpsertPropertyFormSchemaType>({
     resolver: zodResolver(upsertPropertyFormSchema),
     defaultValues: {
       basic: {
-        name: propertyToEdit?.name ?? "",
-        description: propertyToEdit?.description ?? "",
-        typeId: propertyToEdit?.type?.id ?? "",
-        statusId: propertyToEdit?.status?.id ?? "",
-        price: propertyToEdit?.price?.toString() ?? "",
+        name: propertyToEdit?.name ?? '',
+        description: propertyToEdit?.description ?? '',
+        typeId: propertyToEdit?.type?.id ?? '',
+        statusId: propertyToEdit?.status?.id ?? '',
+        price: propertyToEdit?.price?.toString() ?? '',
       },
       location: {
-        address: propertyToEdit?.location?.address ?? "",
-        city: propertyToEdit?.location?.city ?? "",
-        state: propertyToEdit?.location?.state ?? "",
-        zip: propertyToEdit?.location?.zip ?? "",
-        landmarks: propertyToEdit?.location?.landmarks ?? "",
-        country: propertyToEdit?.location?.country ?? "",
+        address: propertyToEdit?.location?.address ?? '',
+        city: propertyToEdit?.location?.city ?? '',
+        state: propertyToEdit?.location?.state ?? '',
+        zip: propertyToEdit?.location?.zip ?? '',
+        landmarks: propertyToEdit?.location?.landmarks ?? '',
+        country: propertyToEdit?.location?.country ?? '',
       },
       features: {
-        bedrooms: propertyToEdit?.feature?.bedrooms?.toString() ?? "",
-        bathrooms: propertyToEdit?.feature?.bathrooms?.toString() ?? "",
-        parkingSpots: propertyToEdit?.feature?.parkingSpots?.toString() ?? "",
-        area: propertyToEdit?.feature?.area?.toString() ?? "",
+        bedrooms: propertyToEdit?.feature?.bedrooms?.toString() ?? '',
+        bathrooms: propertyToEdit?.feature?.bathrooms?.toString() ?? '',
+        parkingSpots: propertyToEdit?.feature?.parkingSpots?.toString() ?? '',
+        area: propertyToEdit?.feature?.area?.toString() ?? '',
         hasSwimmingPool: propertyToEdit?.feature?.hasSwimmingPool ?? false,
         hasGardenOrYard: propertyToEdit?.feature?.hasGardenOrYard ?? false,
         hasBalconyOrPatio: propertyToEdit?.feature?.hasBalconyOrPatio ?? false,
       },
       contact: {
-        name: propertyToEdit?.contact?.name ?? "",
-        email: propertyToEdit?.contact?.email ?? "",
-        phone: propertyToEdit?.contact?.phone ?? "",
+        name: propertyToEdit?.contact?.name ?? '',
+        email: propertyToEdit?.contact?.email ?? '',
+        phone: propertyToEdit?.contact?.phone ?? '',
       },
     },
   })
@@ -118,7 +118,7 @@ const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }
   }>({
     existedPictures: propertyToEdit?.pictures ?? [],
     toDeleteIds: [],
-  });
+  })
 
   const onClickNext = () => {
     setCurrentStep(prev => prev + 1)
@@ -131,7 +131,7 @@ const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }
   const onDeleteExistedPicture = (picture: PropertyPicture) => {
     setDbPictures(prev => ({
       existedPictures: prev.existedPictures.filter(p => p.id !== picture.id),
-      toDeleteIds: [...prev.toDeleteIds, picture.id]
+      toDeleteIds: [...prev.toDeleteIds, picture.id],
     }))
   }
 
@@ -139,13 +139,13 @@ const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }
     const pictureUrls = await uploadPropertyPictures(imagesToUpload)
 
     if (!pictureUrls) {
-      toast.error("Failed to upload pictures! Please try again.")
+      toast.error('Failed to upload pictures! Please try again.')
       return
     }
 
     upsertPropertyAction({
       ...data,
-      ownerId: propertyToEdit?.user.id ?? "",
+      ownerId: propertyToEdit?.user.id ?? '',
       pictures: pictureUrls,
       id: propertyId,
       pictureIdsToDelete: dbPictures.toDeleteIds,
@@ -157,26 +157,27 @@ const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }
       <Stepper stepItemList={STEP_ITEM_LIST} currentStep={currentStep} setCurrentStep={setCurrentStep} />
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit, (errors) => {
-          console.error("errors", errors)
-        })}>
+          console.error('errors', errors)
+        })}
+        >
           <BasicForm
-            className={cn({ "hidden": currentStep !== 0 })}
+            className={cn({ hidden: currentStep !== 0 })}
             statusList={statusList}
             typeList={typeList}
             onClickNext={onClickNext}
           />
           <LocationForm
-            className={cn({ "hidden": currentStep !== 1 })}
+            className={cn({ hidden: currentStep !== 1 })}
             onClickNext={onClickNext}
             onClickPrevious={onClickPrevious}
           />
           <FeatureForm
-            className={cn({ "hidden": currentStep !== 2 })}
+            className={cn({ hidden: currentStep !== 2 })}
             onClickNext={onClickNext}
             onClickPrevious={onClickPrevious}
           />
           <PictureForm
-            className={cn({ "hidden": currentStep !== 3 })}
+            className={cn({ hidden: currentStep !== 3 })}
             imagesToUpload={imagesToUpload}
             setImagesToUpload={setImagesToUpload}
             existedPictures={dbPictures.existedPictures}
@@ -185,7 +186,7 @@ const UpsertPropertyForm = ({ statusList, typeList, propertyId, propertyToEdit }
             onClickPrevious={onClickPrevious}
           />
           <ContactForm
-            className={cn({ "hidden": currentStep !== 4 })}
+            className={cn({ hidden: currentStep !== 4 })}
             onClickPrevious={onClickPrevious}
             isLoading={methods.formState.isSubmitting || isExecuting}
           />

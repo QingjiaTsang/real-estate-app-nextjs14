@@ -1,38 +1,37 @@
 'use client'
-import { useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import FileInput from '@/app/components/FileInput'
+import { updateUserAvatar } from '@/libs/actions/user'
+import { PencilIcon } from '@heroicons/react/24/solid'
 
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react'
 
-import { PencilIcon } from "@heroicons/react/24/solid"
-import FileInput from "@/app/components/FileInput";
-import { updateUserAvatar } from "@/libs/actions/user";
-import { useAction } from "next-safe-action/hooks";
-import { toast } from "react-toastify";
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useAction } from 'next-safe-action/hooks'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 
-
-const UploadAvatarButton = () => {
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [avatar, setAvatar] = useState<File | undefined>();
+function UploadAvatarButton() {
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const [avatar, setAvatar] = useState<File | undefined>()
 
   const router = useRouter()
 
   const { execute: updateAvatar, isExecuting, result } = useAction(updateUserAvatar, {
     onSuccess: () => {
-      toast.success("Avatar updated")
+      toast.success('Avatar updated')
       router.refresh()
       onClose()
     },
     onError: (error) => {
-      toast.error("Failed to update avatar")
-    }
+      toast.error('Failed to update avatar')
+    },
   })
 
   const onSubmit = async () => {
     if (!avatar) {
       onClose()
-      return;
+      return
     }
 
     const formData = new FormData()
@@ -40,7 +39,6 @@ const UploadAvatarButton = () => {
 
     updateAvatar(formData)
   }
-
 
   return (
     <>
@@ -54,7 +52,7 @@ const UploadAvatarButton = () => {
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
+          {onClose => (
             <form action={onSubmit}>
               <ModalHeader className="flex flex-col gap-1">Upload Avatar</ModalHeader>
 
@@ -63,7 +61,7 @@ const UploadAvatarButton = () => {
                   lablText="Select Avatar"
                   accept="image/*"
                   image={avatar}
-                  onChange={(e) => setAvatar(e?.target?.files?.[0])}
+                  onChange={e => setAvatar(e?.target?.files?.[0])}
                 />
                 {
                   avatar && (

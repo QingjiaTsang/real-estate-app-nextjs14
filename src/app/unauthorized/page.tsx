@@ -1,7 +1,7 @@
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 
-const UnauthorizedPage = () => {
+function UnauthorizedPage() {
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-64px)] bg-gray-100">
       <div className="text-center p-8 bg-white rounded-lg shadow-lg">

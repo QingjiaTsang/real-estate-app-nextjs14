@@ -1,16 +1,15 @@
 'use client'
 
-import PropertyCard, { Property } from '@/app/components/PropertyCard'
-import PropertyCardsContainer from '@/app/components/PropertyCardsContainer';
-import { getPropertiesByPage } from '@/libs/actions/property';
+import type { Property } from '@/app/components/PropertyCard'
+import PropertyCard from '@/app/components/PropertyCard'
+import { getPropertiesByPage } from '@/libs/actions/property'
 import { Spinner } from '@nextui-org/react'
-import { useEffect, useState } from 'react';
-import { useInView } from "react-intersection-observer";
+import { parseAsString, useQueryState } from 'nuqs'
+import { useEffect, useState } from 'react'
 
-import { parseAsString, useQueryState } from 'nuqs';
+import { useInView } from 'react-intersection-observer'
 
-
-const LoadMore = () => {
+function LoadMore() {
   const [search] = useQueryState('search', parseAsString.withDefault(''))
 
   const { ref, inView } = useInView()
@@ -18,7 +17,6 @@ const LoadMore = () => {
   const [page, setPage] = useState(2)
   const [properties, setProperties] = useState<Property[]>([])
   const [noMore, setNoMore] = useState(false)
-
 
   const loadMoreBeers = async () => {
     const nextPage = page + 1
@@ -32,9 +30,9 @@ const LoadMore = () => {
 
   useEffect(() => {
     if (inView) {
-      loadMoreBeers();
+      loadMoreBeers()
     }
-  }, [inView]);
+  }, [inView])
 
   useEffect(() => {
     setProperties([])
@@ -44,7 +42,7 @@ const LoadMore = () => {
 
   return (
     <>
-      {properties.map((property) => (
+      {properties.map(property => (
         <PropertyCard key={property.id} property={property} />
       ))}
       {

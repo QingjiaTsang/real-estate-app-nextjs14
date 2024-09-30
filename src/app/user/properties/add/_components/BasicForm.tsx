@@ -1,26 +1,25 @@
-import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
+import type { UpsertPropertyFormSchemaType } from '@/zodSchema/property.zod'
 
-import { PropertyStatus, PropertyType } from "@prisma/client"
+import type { PropertyStatus, PropertyType } from '@prisma/client'
 
-import { Button, Card, CardBody, CardFooter, cn, Input, Select, SelectItem, Textarea } from "@nextui-org/react"
+import { CurrencyDollarIcon } from '@heroicons/react/24/outline'
 
-import { Controller, useFormContext } from "react-hook-form"
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
-import { CurrencyDollarIcon } from "@heroicons/react/24/outline"
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { Button, Card, CardBody, CardFooter, cn, Input, Select, SelectItem, Textarea } from '@nextui-org/react'
+import { Controller, useFormContext } from 'react-hook-form'
 
-type BasicFormProps = {
+interface BasicFormProps {
   statusList: PropertyStatus[]
   typeList: PropertyType[]
   onClickNext: () => void
   className?: string
 }
 
-
-const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormProps) => {
+function BasicForm({ statusList, typeList, onClickNext, className }: BasicFormProps) {
   const { control, formState: { errors }, trigger, getValues } = useFormContext<UpsertPropertyFormSchemaType>()
 
   return (
-    <div className={cn("container mx-auto p-4", className)}>
+    <div className={cn('container mx-auto p-4', className)}>
       <Card>
         <CardBody className="grid grid-cols-1 md:grid-cols-3 gap-2">
           <Controller
@@ -64,7 +63,7 @@ const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormPr
                 errorMessage={errors.basic?.typeId?.message}
                 className="col-span-3 md:col-span-1"
               >
-                {typeList.map((type) => (
+                {typeList.map(type => (
                   <SelectItem key={type.id} value={type.id}>{type.value}</SelectItem>
                 ))}
               </Select>
@@ -84,7 +83,7 @@ const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormPr
                 errorMessage={errors.basic?.statusId?.message}
                 className="col-span-3 md:col-span-1"
               >
-                {statusList.map((status) => (
+                {statusList.map(status => (
                   <SelectItem key={status.id} value={status.id}>{status.value}</SelectItem>
                 ))}
               </Select>
@@ -120,7 +119,7 @@ const BasicForm = ({ statusList, typeList, onClickNext, className }: BasicFormPr
             color="primary"
             endContent={<ChevronRightIcon className="w-4 h-4" />}
             onClick={async () => {
-              const isValid = await trigger(["basic"])
+              const isValid = await trigger(['basic'])
               isValid && onClickNext()
             }}
             className="w-36"

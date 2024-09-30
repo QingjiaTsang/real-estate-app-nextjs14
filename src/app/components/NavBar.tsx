@@ -1,24 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { HomeModernIcon } from '@heroicons/react/24/solid'
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import {
-  Navbar,
-  NavbarBrand,
-  NavbarMenuToggle,
-  NavbarMenuItem,
-  NavbarMenu,
-  NavbarContent,
-  NavbarItem,
-  Link,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Avatar,
+  Link,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
 } from '@nextui-org/react'
-import { HomeModernIcon } from '@heroicons/react/24/solid'
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-
+import { useState } from 'react'
 
 interface NavBarProps {
   children: React.ReactNode
@@ -27,38 +25,39 @@ interface NavBarProps {
 export default function NavBar({ children }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const { isAuthenticated } = useKindeBrowserClient();
+  const { isAuthenticated } = useKindeBrowserClient()
 
+  const menuItems = isAuthenticated
+    ? [
+        {
+          textValue: 'Profile',
+          href: '/user/profile',
+        },
+        {
+          textValue: 'Properties',
+          href: '/user/properties',
+        },
+        {
+          textValue: 'Log Out',
+          href: '/api/auth/logout',
+        },
 
-  const menuItems = isAuthenticated ? [
-    {
-      textValue: 'Profile',
-      href: '/user/profile'
-    },
-    {
-      textValue: 'Properties',
-      href: '/user/properties'
-    },
-    {
-      textValue: 'Log Out',
-      href: '/api/auth/logout'
-    },
-
-  ] : [
-    {
-      textValue: 'Log In',
-      href: '/api/auth/login'
-    },
-    {
-      textValue: 'Sign Up',
-      href: '/api/auth/signup'
-    }
-  ];
+      ]
+    : [
+        {
+          textValue: 'Log In',
+          href: '/api/auth/login',
+        },
+        {
+          textValue: 'Sign Up',
+          href: '/api/auth/signup',
+        },
+      ]
 
   return (
     <Navbar
       isBordered
-      className='shadow'
+      className="shadow"
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>
@@ -85,7 +84,7 @@ export default function NavBar({ children }: NavBarProps) {
               <div>{children}</div>
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions">
-              {menuItems.map((item) => (
+              {menuItems.map(item => (
                 <DropdownItem key={item.textValue} textValue={item.textValue} href={item.href}>
                   {item.textValue}
                 </DropdownItem>
@@ -96,7 +95,7 @@ export default function NavBar({ children }: NavBarProps) {
       </NavbarContent>
 
       {/* mobile menu */}
-      <NavbarMenu >
+      <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.textValue}-${index}`}>
             <Link

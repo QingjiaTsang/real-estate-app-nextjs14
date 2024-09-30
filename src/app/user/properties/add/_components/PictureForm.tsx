@@ -1,17 +1,12 @@
-import { PropertyPicture } from '@prisma/client'
+import type { PropertyPicture } from '@prisma/client'
 
-import { useState } from 'react'
-
-import { Button, Card, CardBody, CardFooter, cn, Image } from "@nextui-org/react"
-import { ChevronLeftIcon, ChevronRightIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/outline"
-import FileInput from "@/app/components/FileInput"
+import FileInput from '@/app/components/FileInput'
+import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { Button, Card, CardBody, CardFooter, cn, Image } from '@nextui-org/react'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
-import { useFormContext } from "react-hook-form"
-import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
 
-
-type PictureFormProps = {
+interface PictureFormProps {
   imagesToUpload: File[]
   setImagesToUpload: React.Dispatch<React.SetStateAction<File[]>>
   existedPictures: PropertyPicture[]
@@ -21,7 +16,7 @@ type PictureFormProps = {
   className?: string
 }
 
-const PictureForm = ({
+function PictureForm({
   imagesToUpload,
   setImagesToUpload,
   existedPictures,
@@ -29,8 +24,7 @@ const PictureForm = ({
   onClickNext,
   onClickPrevious,
   className,
-}: PictureFormProps) => {
-
+}: PictureFormProps) {
   const handleDeleteImage = (index: number) => {
     setImagesToUpload(prev => prev.filter((_, i) => i !== index))
   }
@@ -40,17 +34,17 @@ const PictureForm = ({
   }
 
   return (
-    <div className={cn("container mx-auto p-4", className)}>
+    <div className={cn('container mx-auto p-4', className)}>
       <Card>
         <CardBody>
           <FileInput
             lablText="Upload Property Images"
             accept="image/*"
             image={imagesToUpload[imagesToUpload.length - 1]}
-            onChange={(e) => handleAddImage(e?.target?.files?.[0]!)}
+            onChange={e => handleAddImage(e?.target?.files![0])}
           />
           <div className="flex my-2 gap-2 flex-wrap">
-            {existedPictures.map((picture) => (
+            {existedPictures.map(picture => (
               <div key={picture.id} className="relative group">
                 <Zoom>
                   <Image

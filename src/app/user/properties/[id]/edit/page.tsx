@@ -1,16 +1,15 @@
-import { redirect } from 'next/navigation'
-import prisma from "@/libs/prisma"
+import PageTitle from '@/app/components/PageTitle'
+import UpsertPropertyForm from '@/app/user/properties/add/_components/UpsertPropertyForm'
+import prisma from '@/libs/prisma'
+
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import { notFound, redirect } from 'next/navigation'
 
-import PageTitle from "@/app/components/PageTitle"
-import UpsertPropertyForm from "@/app/user/properties/add/_components/UpsertPropertyForm"
-import { notFound } from "next/navigation"
-
-type EditPropertyPageProps = {
+interface EditPropertyPageProps {
   params: { id: string }
 }
 
-const EditPropertyPage = async ({ params }: EditPropertyPageProps) => {
+async function EditPropertyPage({ params }: EditPropertyPageProps) {
   const { getUser } = getKindeServerSession()
 
   const [user, propertyStatusList, propertyTypeList, propertyToEdit] = await Promise.all([

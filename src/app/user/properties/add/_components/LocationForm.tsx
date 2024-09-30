@@ -1,25 +1,25 @@
-import { Button, Card, CardBody, CardFooter, cn, Input, Select, SelectItem, Textarea } from "@nextui-org/react"
+import type { UpsertPropertyFormSchemaType } from '@/zodSchema/property.zod'
 
-import { useFormContext, Controller } from "react-hook-form"
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { Button, Card, CardBody, CardFooter, cn, Input, Select, SelectItem, Textarea } from '@nextui-org/react'
 
 import CountryList from 'country-list-with-dial-code-and-flag'
 
-import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
+import { Controller, useFormContext } from 'react-hook-form'
 
-type LocationFormProps = {
+interface LocationFormProps {
   onClickNext: () => void
   onClickPrevious: () => void
   className?: string
 }
 
-const COUNTRY_LIST = CountryList.getAll().map((country) => ({ flag: country.flag, name: country.name, dialCode: country.dialCode }))
+const COUNTRY_LIST = CountryList.getAll().map(country => ({ flag: country.flag, name: country.name, dialCode: country.dialCode }))
 
-const LocationForm = ({ onClickNext, onClickPrevious, className }: LocationFormProps) => {
+function LocationForm({ onClickNext, onClickPrevious, className }: LocationFormProps) {
   const { control, formState: { errors }, trigger, getValues } = useFormContext<UpsertPropertyFormSchemaType>()
 
   return (
-    <div className={cn("container mx-auto p-4", className)}>
+    <div className={cn('container mx-auto p-4', className)}>
       <Card>
         <CardBody className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <Controller
@@ -34,7 +34,7 @@ const LocationForm = ({ onClickNext, onClickPrevious, className }: LocationFormP
                 isInvalid={!!errors.location?.country}
                 errorMessage={errors.location?.country?.message}
               >
-                {COUNTRY_LIST.map((country) => (
+                {COUNTRY_LIST.map(country => (
                   <SelectItem
                     key={country.name}
                     value={country.name}
@@ -128,7 +128,7 @@ const LocationForm = ({ onClickNext, onClickPrevious, className }: LocationFormP
             color="primary"
             endContent={<ChevronRightIcon className="w-4 h-4" />}
             onClick={async () => {
-              const isValid = await trigger(["location"])
+              const isValid = await trigger(['location'])
               isValid && onClickNext()
             }}
             className="w-36"

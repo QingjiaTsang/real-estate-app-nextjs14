@@ -1,32 +1,33 @@
 'use client'
 
+import { ArrowLeftIcon } from '@heroicons/react/24/solid'
+import { cn } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
-import { cn } from "@nextui-org/react";
-import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 
-type PageTitleProps = {
-  title: string;
-  backCaption?: string;
-  backHref?: string;
-  backIcon?: React.ReactNode;
-  className?: string;
-  rightContent?: React.ReactNode;
-};
+interface PageTitleProps {
+  title: string
+  backCaption?: string
+  backHref?: string
+  backIcon?: React.ReactNode
+  className?: string
+  rightContent?: React.ReactNode
+}
 
-const PageTitle = ({
+function PageTitle({
   title,
   backCaption,
   backHref,
   backIcon = <ArrowLeftIcon className="h-6 w-6 md:h-7 md:w-7" />,
   className,
   rightContent,
-}: PageTitleProps) => {
+}: PageTitleProps) {
   const router = useRouter()
 
   const handleBack = () => {
     if (backHref) {
       router.push(backHref)
-    } else {
+    }
+    else {
       router.back()
     }
   }
@@ -34,8 +35,8 @@ const PageTitle = ({
   return (
     <div
       className={cn(
-        "flex items-center justify-between p-4 bg-primary-400",
-        className
+        'flex items-center justify-between p-4 bg-primary-400',
+        className,
       )}
     >
       <button
@@ -61,7 +62,7 @@ const PageTitle = ({
     //     </div>
     //   )}
     // </div>
-  );
-};
+  )
+}
 
-export default PageTitle;
+export default PageTitle

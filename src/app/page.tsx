@@ -1,9 +1,9 @@
-import { getPropertiesByPage } from "@/libs/actions/property"
+import HeaderSearchBar from '@/app/components/HeaderSearchBar'
 
-import PropertyCard from "@/app/components/PropertyCard"
-import LoadMore from "@/app/components/LoadMore"
-import PropertyCardsContainer from "@/app/components/PropertyCardsContainer"
-import HeaderSearchBar from "@/app/components/HeaderSearchBar"
+import LoadMore from '@/app/components/LoadMore'
+import PropertyCard from '@/app/components/PropertyCard'
+import PropertyCardsContainer from '@/app/components/PropertyCardsContainer'
+import { getPropertiesByPage } from '@/libs/actions/property'
 
 import {
   createSearchParamsCache,
@@ -14,9 +14,8 @@ const searchParamsCache = createSearchParamsCache({
   search: parseAsString.withDefault(''),
 })
 
-
 export default async function HomePage({
-  searchParams
+  searchParams,
 }: {
   searchParams: Record<string, string | string[] | undefined>
 }) {
@@ -29,16 +28,13 @@ export default async function HomePage({
       <HeaderSearchBar />
       <div className="container mx-auto p-4">
         <PropertyCardsContainer>
-          {properties.map((property) => (
+          {properties.map(property => (
             <PropertyCard key={property.id} property={property} />
           ))}
           <LoadMore />
         </PropertyCardsContainer>
-      </div >
+      </div>
     </>
 
   )
 }
-
-
-

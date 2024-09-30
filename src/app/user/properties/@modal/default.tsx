@@ -1,4 +1,4 @@
-const DefaultModalPage = () => {
+function DefaultModalPage() {
   return (
     null
   )

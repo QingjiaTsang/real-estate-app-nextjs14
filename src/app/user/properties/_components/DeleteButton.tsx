@@ -1,10 +1,10 @@
 'use client'
 
 import { Button } from '@nextui-org/react'
-// @ts-ignore
-import { useFormStatus } from 'react-dom';
+// @ts-expect-error ignore it
+import { useFormStatus } from 'react-dom'
 
-const DeleteButton = () => {
+function DeleteButton() {
   const { pending } = useFormStatus()
 
   return (

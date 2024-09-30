@@ -1,11 +1,10 @@
-import PageTitle from "@/app/components/PageTitle";
-import page from "@/app/page";
-import PropertyTable from "@/app/user/properties/_components/PropertyTable";
-import prisma from "@/libs/prisma";
+import PageTitle from '@/app/components/PageTitle'
+import PropertyTable from '@/app/user/properties/_components/PropertyTable'
+import prisma from '@/libs/prisma'
 
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import { Button } from '@nextui-org/react'
+import Link from 'next/link'
 
 import {
   createSearchParamsCache,
@@ -18,12 +17,11 @@ const searchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
 })
 
-
-const PropertiesPage = async ({
-  searchParams
+async function PropertiesPage({
+  searchParams,
 }: {
   searchParams: Record<string, string | string[] | undefined>
-}) => {
+}) {
   const { page } = searchParamsCache.parse(searchParams)
 
   const { getUser } = await getKindeServerSession()
@@ -31,20 +29,20 @@ const PropertiesPage = async ({
 
   const propertyCountPromise = prisma.property.count({
     where: {
-      userId: user?.id
-    }
+      userId: user?.id,
+    },
   })
 
   const propertiesPromise = prisma.property.findMany({
     where: {
-      userId: user?.id
+      userId: user?.id,
     },
     include: {
       type: true,
-      status: true
+      status: true,
     },
     take: ITEMS_PER_PAGE,
-    skip: (page - 1) * ITEMS_PER_PAGE
+    skip: (page - 1) * ITEMS_PER_PAGE,
   })
 
   const [propertyCount, properties] = await Promise.all([propertyCountPromise, propertiesPromise])
@@ -55,7 +53,7 @@ const PropertiesPage = async ({
     <>
       <PageTitle
         title="Properties"
-        rightContent={<Button color='secondary' href='/user/properties/add' as={Link}>Add Property</Button>}
+        rightContent={<Button color="secondary" href="/user/properties/add" as={Link}>Add Property</Button>}
       />
       <PropertyTable
         properties={properties}

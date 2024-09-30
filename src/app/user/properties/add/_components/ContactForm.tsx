@@ -1,20 +1,20 @@
-import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
+import type { UpsertPropertyFormSchemaType } from '@/zodSchema/property.zod'
 
-import { Button, Card, CardBody, CardFooter, cn, Input } from '@nextui-org/react'
-import { useFormContext, Controller } from 'react-hook-form'
 import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { Button, Card, CardBody, CardFooter, cn, Input } from '@nextui-org/react'
+import { Controller, useFormContext } from 'react-hook-form'
 
-type ContactFormProps = {
+interface ContactFormProps {
   isLoading: boolean
   onClickPrevious: () => void
   className?: string
 }
 
-const ContactForm = ({ isLoading, onClickPrevious, className }: ContactFormProps) => {
+function ContactForm({ isLoading, onClickPrevious, className }: ContactFormProps) {
   const { control, formState: { errors } } = useFormContext<UpsertPropertyFormSchemaType>()
 
   return (
-    <div className={cn("container mx-auto p-4", className)}>
+    <div className={cn('container mx-auto p-4', className)}>
       <Card>
         <CardBody className="grid grid-cols-1 md:grid-cols-3 gap-2">
           <Controller
@@ -71,7 +71,7 @@ const ContactForm = ({ isLoading, onClickPrevious, className }: ContactFormProps
           </Button>
           <Button
             color="primary"
-            type='submit'
+            type="submit"
             endContent={<PlusIcon className="h-4 w-4" />}
             className="w-36"
             isLoading={isLoading}

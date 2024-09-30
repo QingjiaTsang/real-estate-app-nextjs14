@@ -1,12 +1,11 @@
 'use server'
 
-import { authAction } from "@/libs/actions/safeAction"
-import prisma from "@/libs/prisma"
-import { uploadAvatar } from "@/libs/upload"
-import { flattenValidationErrors } from "next-safe-action"
+import { authAction } from '@/libs/actions/safeAction'
+import prisma from '@/libs/prisma'
+import { uploadAvatar } from '@/libs/upload'
+import { flattenValidationErrors } from 'next-safe-action'
 
-import { z } from "zod"
-import { zfd } from "zod-form-data";
+import { zfd } from 'zod-form-data'
 
 // const avatarSchema = z.object({
 //   avatar: z.custom<File>((v) => v instanceof File, {
@@ -25,7 +24,7 @@ export const getDbUser = authAction.action(async ({ ctx }) => ctx.user)
 // https://next-safe-action.dev/docs/recipes/upload-files
 export const updateUserAvatar = authAction
   .schema(avatarSchema, {
-    handleValidationErrorsShape: (errors) => flattenValidationErrors(errors).fieldErrors
+    handleValidationErrorsShape: errors => flattenValidationErrors(errors).fieldErrors,
   })
   .action(async ({ ctx, parsedInput: { avatar } }) => {
     const userId = ctx.user.id
@@ -33,7 +32,7 @@ export const updateUserAvatar = authAction
     const avatarUrl = await uploadAvatar(avatar)
 
     if (!avatarUrl) {
-      throw new Error("Failed to upload avatar")
+      throw new Error('Failed to upload avatar')
     }
 
     const updatedUser = await prisma.user.update({
@@ -45,7 +44,7 @@ export const updateUserAvatar = authAction
     })
 
     if (!updatedUser) {
-      throw new Error("Failed to update user avatar")
+      throw new Error('Failed to update user avatar')
     }
 
     return updatedUser

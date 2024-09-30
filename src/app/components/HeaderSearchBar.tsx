@@ -1,16 +1,14 @@
 'use client'
-import { cn, Input } from '@nextui-org/react';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { parseAsString, useQueryState } from 'nuqs';
-import { useDebouncedCallback } from 'use-debounce';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import type VConsole from 'vconsole'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import { Input } from '@nextui-org/react'
+import { useRouter } from 'next/navigation'
+import { parseAsString, useQueryState } from 'nuqs'
+import { useEffect } from 'react'
 
+import { useDebouncedCallback } from 'use-debounce'
 
-import VConsole from 'vconsole';
-
-
-const HeaderSearchBar = () => {
+function HeaderSearchBar() {
   const router = useRouter()
 
   const [search, setSearch] = useQueryState('search', parseAsString.withDefault(''))
@@ -24,21 +22,19 @@ const HeaderSearchBar = () => {
     router.refresh()
   }, [search])
 
-
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      let vConsole: VConsole;
+      let vConsole: VConsole
       const loadVConsole = async () => {
-        const VConsole = (await import('vconsole')).default;
-      };
-      loadVConsole();
+        const VConsole = (await import('vconsole')).default
+      }
+      loadVConsole()
       return () => {
-        if (vConsole) vConsole.destroy();
-      };
+        if (vConsole)
+          vConsole.destroy()
+      }
     }
   }, [])
-
-
 
   return (
     <div
@@ -49,7 +45,7 @@ const HeaderSearchBar = () => {
         startContent={<MagnifyingGlassIcon className="w-5 h-5" />}
         placeholder="Search"
         defaultValue={search}
-        onChange={(e) => debouncedSearch(e.target.value)}
+        onChange={e => debouncedSearch(e.target.value)}
         className="w-56 sm:w-96 mx-auto"
       />
     </div>

@@ -1,22 +1,21 @@
-import { Button, Card, CardBody, CardFooter, cn, Input, Checkbox } from "@nextui-org/react"
+import type { UpsertPropertyFormSchemaType } from '@/zodSchema/property.zod'
 
-import { Controller, useFormContext } from "react-hook-form"
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { Button, Card, CardBody, CardFooter, Checkbox, cn, Input } from '@nextui-org/react'
 
-import { UpsertPropertyFormSchemaType } from "@/zodSchema/property.zod"
+import { Controller, useFormContext } from 'react-hook-form'
 
-
-type FeatureFormProps = {
+interface FeatureFormProps {
   onClickNext: () => void
   onClickPrevious: () => void
   className?: string
 }
 
-const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormProps) => {
+function FeatureForm({ onClickNext, onClickPrevious, className }: FeatureFormProps) {
   const { control, formState: { errors }, trigger, getValues } = useFormContext<UpsertPropertyFormSchemaType>()
 
   return (
-    <div className={cn("container mx-auto p-4", className)}>
+    <div className={cn('container mx-auto p-4', className)}>
       <Card>
         <CardBody className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <Controller
@@ -83,7 +82,7 @@ const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormPro
                 <Checkbox
                   onChange={field.onChange}
                   onBlur={field.onBlur}
-                  defaultSelected={getValues("features.hasSwimmingPool")}
+                  defaultSelected={getValues('features.hasSwimmingPool')}
                 >
                   Has Swimming Pool
                 </Checkbox>
@@ -97,7 +96,7 @@ const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormPro
                 <Checkbox
                   onChange={field.onChange}
                   onBlur={field.onBlur}
-                  defaultSelected={getValues("features.hasGardenOrYard")}
+                  defaultSelected={getValues('features.hasGardenOrYard')}
                 >
                   Has Garden/Yard
                 </Checkbox>
@@ -111,7 +110,7 @@ const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormPro
                 <Checkbox
                   onChange={field.onChange}
                   onBlur={field.onBlur}
-                  defaultSelected={getValues("features.hasBalconyOrPatio")}
+                  defaultSelected={getValues('features.hasBalconyOrPatio')}
                 >
                   Has Balcony/Patio
                 </Checkbox>
@@ -133,7 +132,7 @@ const FeatureForm = ({ onClickNext, onClickPrevious, className }: FeatureFormPro
             color="primary"
             endContent={<ChevronRightIcon className="w-4 h-4" />}
             onClick={async () => {
-              const isValid = await trigger(["features"])
+              const isValid = await trigger(['features'])
               isValid && onClickNext()
             }}
             className="w-36"

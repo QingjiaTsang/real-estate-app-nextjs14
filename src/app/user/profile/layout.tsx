@@ -1,10 +1,10 @@
-import PageTitle from '@/app/components/PageTitle';
+import PageTitle from '@/app/components/PageTitle'
 
-const ProfileLayout = ({
+function ProfileLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
-}>) => {
+  children: React.ReactNode
+}>) {
   return (
     <div>
       <PageTitle title="Profile" />
