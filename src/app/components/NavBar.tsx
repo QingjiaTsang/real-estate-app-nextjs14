@@ -50,7 +50,7 @@ export default function NavBar({ children }: NavBarProps) {
       },
       {
         textValue: 'Sign Up',
-        href: '/api/auth/signup',
+        href: '/api/auth/register',
       },
     ]
 
