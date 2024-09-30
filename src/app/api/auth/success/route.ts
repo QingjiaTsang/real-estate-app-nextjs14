@@ -26,11 +26,11 @@ export async function GET() {
       })
     }
 
-    return NextResponse.redirect('http://localhost:3000/')
+    return NextResponse.redirect(process.env.KINDE_SITE_URL ?? `https://${process.env.VERCEL_URL}`)
   }
   catch (error) {
     console.error('error', error)
     // logout from kinde provider if db user creation fails
-    return NextResponse.redirect('http://localhost:3000/api/auth/logout')
+    return NextResponse.redirect(`https://${process.env.VERCEL_URL}/api/auth/logout`)
   }
 }
