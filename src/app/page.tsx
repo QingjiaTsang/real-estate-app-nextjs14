@@ -1,10 +1,6 @@
 import HeaderSearchBar from '@/app/components/HeaderSearchBar'
-
-import LoadMore from '@/app/components/LoadMore'
-import PropertyCard from '@/app/components/PropertyCard'
-import PropertyCardsContainer from '@/app/components/PropertyCardsContainer'
+import PropertyList from '@/app/components/PropertyList'
 import { getPropertiesByPage } from '@/libs/actions/property'
-
 import {
   createSearchParamsCache,
   parseAsString,
@@ -20,21 +16,15 @@ export default async function HomePage({
   searchParams: Record<string, string | string[] | undefined>
 }) {
   const { search } = searchParamsCache.parse(searchParams)
-
-  const properties = await getPropertiesByPage(1, search)
+  const initialProperties = await getPropertiesByPage(1, search)
 
   return (
     <>
       <HeaderSearchBar />
+      {/* optimize First Contentful Paint (FCP) and add loading state for initialProperties after user search */}
       <div className="container mx-auto p-4">
-        <PropertyCardsContainer>
-          {properties.map(property => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
-          <LoadMore />
-        </PropertyCardsContainer>
+        <PropertyList initialProperties={initialProperties} initialSearch={search} />
       </div>
     </>
-
   )
 }

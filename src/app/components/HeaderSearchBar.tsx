@@ -1,6 +1,6 @@
 'use client'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import { Input } from '@nextui-org/react'
+import { Input, user } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { parseAsString, useQueryState } from 'nuqs'
 import { useEffect } from 'react'
@@ -20,7 +20,6 @@ function HeaderSearchBar() {
     // Note: refresh the first page data from server component
     router.refresh()
   }, [search])
-
 
   return (
     <div
