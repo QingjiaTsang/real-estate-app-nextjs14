@@ -1,7 +1,8 @@
 import type { Prisma } from '@prisma/client'
 
-import { Card, Image } from '@nextui-org/react'
+import { Card, } from '@nextui-org/react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export type Property = Prisma.PropertyGetPayload<{
   select: {
@@ -29,6 +30,8 @@ function PropertyCard({ property }: { property: Property }) {
       <Image
         src={property.pictures[0].url}
         alt={property.name}
+        width={288}
+        height={320}
         className="max-w-full object-cover rounded-none"
       />
       <div className="p-4">

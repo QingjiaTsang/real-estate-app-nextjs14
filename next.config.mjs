@@ -13,7 +13,14 @@ const nextConfig = {
         process.env.KINDE_POST_LOGIN_REDIRECT_URL ?? `https://${process.env.VERCEL_URL}/api/auth/success`
     }
   },
-  
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'loremflickr.com',
+      },
+    ],
+  },
 }
 
 export default nextConfig
