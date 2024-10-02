@@ -6,7 +6,8 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDi
 import { useRouter } from 'next/navigation'
 import { useAction } from 'next-safe-action/hooks'
 import { useEffect } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from 'sonner'
+
 
 // Note: the path to the [id]/delete segment can use the (.) matcher rather than (..), since @modal is a slot and not a segment.
 // so we can use the (.)[id] matcher to match the [id]/delete route and pass it to the modal.

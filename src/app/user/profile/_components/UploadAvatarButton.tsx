@@ -9,7 +9,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useAction } from 'next-safe-action/hooks'
 import { useState } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from 'sonner'
+
 
 function UploadAvatarButton() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()

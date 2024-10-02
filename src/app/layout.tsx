@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
 import NavBar from '@/app/components/NavBar'
-import ToastProvider from '@/app/components/ToastProvider'
 
 import UserAuthPanel from '@/app/components/UserAuthPanel'
 
 import { NextUIProvider } from '@nextui-org/react'
+import { Toaster } from 'sonner'
+
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 import localFont from 'next/font/local'
 
 import './globals.css'
+
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -34,7 +38,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextUIProvider>
-          <ToastProvider />
+          <SpeedInsights />
+          <Toaster richColors={true} position="top-center" />
           <NavBar>
             <UserAuthPanel />
           </NavBar>
