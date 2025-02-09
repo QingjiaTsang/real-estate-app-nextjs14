@@ -1,4 +1,6 @@
-import prisma from '@/libs/prisma'
+/* eslint node/prefer-global/process: [error] */
+import { env } from '@/lib/env'
+import prisma from '@/lib/prisma'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { NextResponse } from 'next/server'
 
@@ -26,7 +28,7 @@ export async function GET() {
       })
     }
 
-    return NextResponse.redirect(process.env.KINDE_SITE_URL ?? `https://${process.env.VERCEL_URL}`)
+    return NextResponse.redirect(env.KINDE_SITE_URL ?? `https://${process.env.VERCEL_URL}`)
   }
   catch (error) {
     console.error('error', error)

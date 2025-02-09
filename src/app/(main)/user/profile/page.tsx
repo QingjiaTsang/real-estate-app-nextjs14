@@ -1,0 +1,25 @@
+import UserProfile from '@/app/(main)/user/profile/_components/UserProfile'
+import prisma from '@/lib/prisma'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+
+async function ProfilePage() {
+  const { getUser } = await getKindeServerSession()
+  const kindeUser = await getUser()
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: kindeUser?.id ?? '',
+    },
+    include: {
+      properties: true,
+    },
+  })
+
+  return (
+    <div>
+      {user && <UserProfile user={user} />}
+    </div>
+  )
+}
+
+export default ProfilePage
