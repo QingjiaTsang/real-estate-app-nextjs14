@@ -52,11 +52,15 @@ function Header({ children }: { children: React.ReactNode }) {
   const menuItems = isAuthenticated
     ? [
         {
-          textValue: 'Profile',
+          textValue: 'Properties',
+          href: '/properties',
+        },
+        {
+          textValue: 'My profile',
           href: '/user/profile',
         },
         {
-          textValue: 'Properties',
+          textValue: 'My properties',
           href: '/user/properties',
         },
         {
@@ -66,6 +70,10 @@ function Header({ children }: { children: React.ReactNode }) {
         },
       ]
     : [
+        {
+          textValue: 'Properties',
+          href: '/properties',
+        },
         {
           textValue: 'Log In',
           href: '/api/auth/login',

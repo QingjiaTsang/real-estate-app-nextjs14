@@ -52,6 +52,9 @@ dependencies:
   country-list-with-dial-code-and-flag:
     specifier: ^5.0.5
     version: 5.0.5
+  dotenv:
+    specifier: ^16.4.7
+    version: 16.4.7
   framer-motion:
     specifier: ^11.5.4
     version: 11.5.4(react-dom@18.0.0)(react@18.0.0)
@@ -6141,6 +6144,11 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}

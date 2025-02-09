@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "seed": "tsx src/libs/seed.ts"
+    "seed": "tsx src/lib/seed.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -28,6 +28,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "country-list-with-dial-code-and-flag": "^5.0.5",
+    "dotenv": "^16.4.7",
     "framer-motion": "^11.5.4",
     "lenis": "^1.1.20",
     "lucide-react": "^0.475.0",

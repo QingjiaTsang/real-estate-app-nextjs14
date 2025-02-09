@@ -6,15 +6,12 @@ import { createClient } from 'pexels'
 
 const COUNTRY_LIST = CountryList.getAll().map(country => ({ flag: country.flag, name: country.name, dialCode: country.dialCode }))
 
-// 创建 Pexels 客户端
 const pexelsClient = createClient(env.PIXELS_API_KEY!)
 
-// 创建图片池来缓存API结果
 let photoUrlsPool: string[] = []
 
 async function getRandomPropertyPhotos(count: number = 5) {
   try {
-    // 如果缓存池为空或不足，就重新获取
     if (photoUrlsPool.length < count) {
       const response = await pexelsClient.photos.search({
         query: 'apartment house property',
@@ -28,7 +25,6 @@ async function getRandomPropertyPhotos(count: number = 5) {
       }
     }
 
-    // 从缓存池中随机获取
     const selectedPhotos = []
     for (let i = 0; i < count; i++) {
       const randomIndex = Math.floor(Math.random() * photoUrlsPool.length)
@@ -41,17 +37,15 @@ async function getRandomPropertyPhotos(count: number = 5) {
   }
   catch (error) {
     console.error('获取 Pexels 图片失败:', error)
-    // 如果API失败，回退到使用 faker
-    return Array.from({length:5}).fill(0).map(() => ({
-      url: faker.image.urlLoremFlickr({ category: 'property,realestate', width: 1600, height: 900 }),
-    }))
+    throw new Error('获取 Pexels 图片失败')
   }
 }
 
 async function seed() {
   const existingUserIds = [
-    'kp_4ef84799d53b4d7d87afbfd3e41fff4e',
-    'kp_76a47bbc519b46128209666e4223453d',
+    // 'kp_4ef84799d53b4d7d87afbfd3e41fff4e',
+    // 'kp_76a47bbc519b46128209666e4223453d',
+    // 'kp_ff632669ef5544169e672be0527f8279',
     'kp_ff632669ef5544169e672be0527f8279',
   ]
 
@@ -75,61 +69,72 @@ async function seed() {
 
   const randomCountry = COUNTRY_LIST[Math.floor(Math.random() * COUNTRY_LIST.length)]
 
-  const newProperty = await prisma.property.create({
-    data: {
-      name: faker.lorem.words(3),
-      description: faker.lorem.paragraph(),
-      price: faker.number.float({ min: 100000, max: 1000000 }),
-      user: {
-        connect: {
-          id: randomUserId,
+  try {
+    const newProperty = await prisma.$transaction(async (tx) => {
+      const property = await tx.property.create({
+        data: {
+          name: faker.lorem.words(3),
+          description: faker.lorem.paragraph(),
+          price: faker.number.float({ min: 100000, max: 1000000 }),
+          user: {
+            connect: {
+              id: randomUserId,
+            },
+          },
+          type: {
+            connect: {
+              id: randomPropertyTypeId,
+            },
+          },
+          status: {
+            connect: {
+              id: randomPropertyStatusId,
+            },
+          },
+          location: {
+            create: {
+              address: faker.location.streetAddress(),
+              city: faker.location.city(),
+              state: faker.location.state(),
+              zip: faker.location.zipCode(),
+              landmarks: faker.lorem.sentence(),
+              country: randomCountry.name,
+            },
+          },
+          feature: {
+            create: {
+              bedrooms: faker.number.int({ min: 1, max: 5 }),
+              bathrooms: faker.number.int({ min: 1, max: 3 }),
+              parkingSpots: faker.number.int({ min: 0, max: 3 }),
+              area: faker.number.int({ min: 50, max: 300 }),
+              hasSwimmingPool: faker.datatype.boolean(),
+              hasGardenOrYard: faker.datatype.boolean(),
+              hasBalconyOrPatio: faker.datatype.boolean(),
+            },
+          },
+          contact: {
+            create: {
+              name: faker.person.fullName(),
+              phone: faker.phone.number(),
+              email: faker.internet.email(),
+            },
+          },
+          pictures: {
+            create: await getRandomPropertyPhotos(5),
+          },
         },
-      },
-      type: {
-        connect: {
-          id: randomPropertyTypeId,
-        },
-      },
-      status: {
-        connect: {
-          id: randomPropertyStatusId,
-        },
-      },
-      location: {
-        create: {
-          address: faker.location.streetAddress(),
-          city: faker.location.city(),
-          state: faker.location.state(),
-          zip: faker.location.zipCode(),
-          landmarks: faker.lorem.sentence(),
-          country: randomCountry.name,
-        },
-      },
-      feature: {
-        create: {
-          bedrooms: faker.number.int({ min: 1, max: 5 }),
-          bathrooms: faker.number.int({ min: 1, max: 3 }),
-          parkingSpots: faker.number.int({ min: 0, max: 3 }),
-          area: faker.number.int({ min: 50, max: 300 }),
-          hasSwimmingPool: faker.datatype.boolean(),
-          hasGardenOrYard: faker.datatype.boolean(),
-          hasBalconyOrPatio: faker.datatype.boolean(),
-        },
-      },
-      contact: {
-        create: {
-          name: faker.person.fullName(),
-          phone: faker.phone.number(),
-          email: faker.internet.email(),
-        },
-      },
-      pictures: {
-        create: await getRandomPropertyPhotos(5),
-      },
-    },
-  })
+      })
 
-  console.log('Seed data created successfully:', newProperty)
+      return property
+    }, {
+      timeout: 30 * 1000,
+    })
+
+    console.log('Seed data created successfully:', newProperty)
+  }
+  catch (error) {
+    console.error('Error creating seed data:', error)
+  }
 }
 
 async function main() {
