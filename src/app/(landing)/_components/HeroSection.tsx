@@ -5,9 +5,9 @@ import { Button, Image, Link } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 
 const images = [
-  'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80',
-  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80',
-  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80',
+  '/images/carousel1.avif',
+  '/images/carousel2.avif',
+  '/images/carousel3.avif',
 ]
 
 function HeroSection() {

@@ -20,6 +20,7 @@ import {
 import { motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
+import ThemeToggle from './ThemeToggle'
 
 function GradientHomeIcon({ className }: { className?: string }) {
   return (
@@ -95,10 +96,6 @@ function Header({ children }: { children: React.ReactNode }) {
       className="bg-background/70 backdrop-blur-md border-b border-slate-100/20"
     >
       <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          className="sm:hidden"
-        />
         <NavbarBrand>
           <motion.div
             className="flex items-center gap-2"
@@ -119,6 +116,11 @@ function Header({ children }: { children: React.ReactNode }) {
             </Link>
           </motion.div>
         </NavbarBrand>
+
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          className="sm:hidden text-foreground"
+        />
       </NavbarContent>
 
       {/* desktop navigation */}
@@ -150,6 +152,9 @@ function Header({ children }: { children: React.ReactNode }) {
 
       {/* desktop user menu */}
       <NavbarContent justify="end" className="hidden sm:flex">
+        <NavbarItem className="mr-2">
+          <ThemeToggle />
+        </NavbarItem>
         <NavbarItem>
           <motion.div
             initial={{ opacity: 0 }}
@@ -181,6 +186,13 @@ function Header({ children }: { children: React.ReactNode }) {
 
       {/* mobile menu */}
       <NavbarMenu>
+        <NavbarMenuItem>
+          <div className="flex items-center gap-2">
+            <span className="text-foreground/80">Theme toggle</span>
+            <ThemeToggle onToggle={() => {setIsMenuOpen(false)}} />
+          </div>
+        </NavbarMenuItem>
+
         {/* mobile navigation */}
         {isLandingPage && navItems.map(item => (
           <NavbarMenuItem key={item}>

@@ -26,7 +26,7 @@ export type Property = Prisma.PropertyGetPayload<{
 
 function PropertyCard({ property }: { property: Property }) {
   return (
-    <Card className="h-[350px] shadow-md w-72 flex flex-col hover:shadow-xl hover:scale-105 transition-all duration-300 group">
+    <Card className="h-[350px] border-1 shadow-md w-72 flex flex-col hover:shadow-xl hover:scale-105 transition-all duration-300 group bg-background">
       <div className="relative h-[320px] w-[288px]">
         <Image
           src={property.pictures[0].url}
@@ -36,8 +36,8 @@ function PropertyCard({ property }: { property: Property }) {
         />
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-bold flex-nowrap truncate">{property?.name}</h3>
-        <p className="text-sm text-gray-500 line-clamp-2">
+        <h3 className="text-lg font-bold flex-nowrap truncate text-foreground">{property?.name}</h3>
+        <p className="text-sm text-foreground/60 line-clamp-2">
           {property?.location?.city}
           ,
           {' '}
@@ -48,14 +48,14 @@ function PropertyCard({ property }: { property: Property }) {
         </p>
       </div>
 
-      <div className="p-4 mt-auto group-hover:bg-gray-100 flex justify-between">
-        <p className="text-lg font-bold">
+      <div className="p-4 mt-auto group-hover:bg-default-100 flex justify-between">
+        <p className="text-lg font-bold text-foreground">
           $
           {property?.price.toLocaleString()}
         </p>
         <Link
           href={`/property/${property.id}`}
-          className="text-base text-gray-500 group-hover:text-blue-500 cursor-pointer"
+          className="text-base text-foreground/60 group-hover:text-blue-400 cursor-pointer"
         >
           View Details
         </Link>

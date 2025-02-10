@@ -7,8 +7,9 @@ import ReactLenis from 'lenis/react'
 
 import localFont from 'next/font/local'
 
-import { Toaster } from 'sonner'
+import { ThemeProvider } from 'next-themes'
 
+import { Toaster } from 'sonner'
 import '@/app/globals.css'
 
 const geistSans = localFont({
@@ -35,13 +36,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ReactLenis root>
-          <NextUIProvider>
-            <SpeedInsights />
-            <Toaster richColors={true} position="top-center" />
-            {children}
-          </NextUIProvider>
-        </ReactLenis>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ReactLenis root>
+            <NextUIProvider>
+              <SpeedInsights />
+              <Toaster richColors={true} position="top-center" />
+              {children}
+            </NextUIProvider>
+          </ReactLenis>
+        </ThemeProvider>
       </body>
     </html>
   )

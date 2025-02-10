@@ -1,3 +1,4 @@
+'use server'
 import { env } from '@/lib/env'
 import prisma from '@/lib/prisma'
 import { faker } from '@faker-js/faker'
@@ -6,7 +7,7 @@ import { createClient } from 'pexels'
 
 const COUNTRY_LIST = CountryList.getAll().map(country => ({ flag: country.flag, name: country.name, dialCode: country.dialCode }))
 
-const pexelsClient = createClient(env.PIXELS_API_KEY!)
+const pexelsClient = createClient(env.PIXELS_API_KEY)
 
 let photoUrlsPool: string[] = []
 
