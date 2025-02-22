@@ -21,6 +21,7 @@ import { motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import ThemeToggle from './ThemeToggle'
+import AuthButtons from '@/components/AuthButtons'
 
 function GradientHomeIcon({ className }: { className?: string }) {
   return (
@@ -156,6 +157,7 @@ function Header({ children }: { children: React.ReactNode }) {
           <ThemeToggle />
         </NavbarItem>
         <NavbarItem>
+          {isAuthenticated ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -181,6 +183,15 @@ function Header({ children }: { children: React.ReactNode }) {
               </DropdownMenu>
             </Dropdown>
           </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              <AuthButtons />
+            </motion.div>
+          )}
         </NavbarItem>
       </NavbarContent>
 

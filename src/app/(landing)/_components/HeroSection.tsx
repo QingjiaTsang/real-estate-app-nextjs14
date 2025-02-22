@@ -1,7 +1,7 @@
 'use client'
 
 import { ImagesSlider } from '@/components/ui/images-slider'
-import { Button, Image, Link } from '@nextui-org/react'
+import { Button, Link } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 
 const images = [

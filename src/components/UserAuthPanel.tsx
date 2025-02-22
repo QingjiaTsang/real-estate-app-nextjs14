@@ -9,11 +9,7 @@ async function UserAuthPanel() {
   const user = dbUserResult?.data
 
   if (!user) {
-    return (
-      <div className="flex items-center gap-2">
-        <AuthButtons />
-      </div>
-    )
+    return null
   }
 
   // Note: do not render with kinde user info, instead use db user info

@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function AuthButtons() {
   return (
-    <NavbarContent justify="end" className="gap-4 hidden lg:flex">
+    <NavbarContent justify="end" className="gap-4 hidden sm:flex">
       <NavbarItem>
         <motion.div
           initial={{
